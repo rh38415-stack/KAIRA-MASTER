@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAIRA · El Plan Maestro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#071114;--abismo:#0A1A1D;--lagoon:#0E2A2B;
+  --jade:#4FA58C;--jade-bright:#6BC7A9;--cacao:#B07B4F;
+  --sand:#E8DCC3;--foam:#93ADA5;--ambar:#D9A441;--coral:#C96A5A;
+  --line:rgba(147,173,165,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--sand);font-family:'Space Grotesk',system-ui,sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6}
+::selection{background:var(--jade);color:var(--ink)}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--jade),var(--jade-bright));z-index:100;transition:width .15s linear}
+.rail{position:fixed;left:0;top:0;bottom:0;width:72px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:22px 0;z-index:90;background:linear-gradient(180deg,rgba(7,17,20,.92),rgba(7,17,20,.55));backdrop-filter:blur(6px)}
+.rail-logo{width:34px;height:34px}
+.rail-nav{display:flex;flex-direction:column;gap:9px;align-items:center}
+.rail-nav a{font-size:9px;letter-spacing:.1em;color:var(--foam);text-decoration:none;opacity:.5;transition:all .3s;font-weight:500}
+.rail-nav a:hover,.rail-nav a.on{color:var(--jade-bright);opacity:1;transform:scale(1.18)}
+.rail-foot{writing-mode:vertical-rl;font-size:9.5px;letter-spacing:.3em;color:var(--foam);text-transform:uppercase}
+main{margin-left:72px}
+@media(max-width:860px){.rail{display:none}main{margin-left:0}}
+
+.eyebrow{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--foam);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:"";height:1px;width:56px;background:var(--jade);opacity:.6}
+.display{font-family:'Fraunces',serif;font-weight:300;line-height:1.04;letter-spacing:-.015em}
+.display em{font-style:italic;color:var(--jade-bright)}
+.display .cacao{font-style:italic;color:var(--cacao)}
+h2.display{font-size:clamp(32px,4.4vw,60px);margin-bottom:26px}
+h3.display{font-size:clamp(21px,2.3vw,31px)}
+.lede{max-width:660px;color:var(--foam);font-size:clamp(15px,1.25vw,17.5px)}
+.lede strong{color:var(--sand);font-weight:500}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.dg{background:var(--jade)}.da{background:var(--ambar)}.dr{background:var(--coral)}
+
+section{padding:clamp(80px,10vh,132px) clamp(22px,7vw,110px);position:relative}
+.hairline{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}.rv.d3{transition-delay:.36s}.rv.d4{transition-delay:.48s}
+
+/* hero + logo */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;background:
+  radial-gradient(1200px 700px at 78% 12%,rgba(79,165,140,.14),transparent 60%),
+  radial-gradient(900px 600px at 12% 88%,rgba(176,123,79,.12),transparent 60%),var(--ink)}
+#stars{position:absolute;inset:0;pointer-events:none;opacity:.85}
+.hero-inner{position:relative;z-index:2}
+.logo-lock{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+.logo-lock svg{height:clamp(52px,6vw,74px);width:auto}
+.logo-word{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(30px,3.6vw,46px);letter-spacing:.5em;color:var(--sand);line-height:1;padding-left:.1em}
+.logo-tag{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--jade-bright);margin-top:8px}
+.hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(40px,6.2vw,92px);line-height:1.03;letter-spacing:-.02em;max-width:17ch}
+.hero h1 em{font-style:italic;color:var(--jade-bright)}
+.hero-sub{margin-top:26px;max-width:610px;color:var(--foam);font-size:clamp(15px,1.4vw,18px)}
+.hero-cred{margin-top:18px;font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--foam)}
+.hero-cred b{color:var(--jade-bright);font-weight:500}
+.hero-meta{margin-top:40px;display:flex;gap:32px;flex-wrap:wrap;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--foam)}
+.hero-meta span b{color:var(--sand);font-weight:500}
+.tide{position:absolute;left:0;right:0;bottom:0;height:120px;opacity:.5;pointer-events:none}
+.tide path{fill:none;stroke:var(--jade);stroke-width:1;opacity:.5}
+.scrolldown{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--foam);animation:bob 2.6s ease-in-out infinite;z-index:2}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+.ticker-wrap{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:15px 0;background:rgba(14,42,43,.35)}
+.ticker{display:flex;gap:62px;white-space:nowrap;width:max-content;animation:slide 52s linear infinite}
+.ticker span{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--foam)}
+.ticker b{color:var(--sand);font-weight:600}.ticker i{color:var(--jade-bright);font-style:normal}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1080px){.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.g3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}}
+@media(max-width:640px){.g4{grid-template-columns:1fr}}
+.card{background:linear-gradient(165deg,rgba(14,42,43,.72),rgba(10,26,29,.5));border:1px solid var(--line);border-radius:14px;padding:26px 26px 24px;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:linear-gradient(90deg,transparent,rgba(107,199,169,.4),transparent);opacity:0;transition:opacity .4s}
+.card:hover::before{opacity:1}
+.card .k{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--foam);margin-bottom:13px}
+.card .v{font-size:clamp(25px,2.4vw,36px);font-weight:600;color:var(--sand);line-height:1.08}
+.card .v.jade{color:var(--jade-bright)}.card .v.cacao{color:var(--cacao)}
+.card .s{margin-top:10px;font-size:12.5px;color:var(--foam)}
+.card.hi{border-color:rgba(107,199,169,.4);background:linear-gradient(165deg,rgba(79,165,140,.16),rgba(10,26,29,.55))}
+
+.legend-sec{background:radial-gradient(900px 520px at 50% 100%,rgba(176,123,79,.13),transparent 62%),var(--abismo)}
+.quote{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:clamp(23px,3vw,40px);line-height:1.34;max-width:30ch;color:var(--sand)}
+.quote em{color:var(--cacao);font-style:italic}
+.quote-att{margin-top:24px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--foam)}
+.hist{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;margin-top:64px}
+@media(max-width:900px){.hist{grid-template-columns:1fr}}
+
+/* mapa */
+.map-wrap{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(20px,3vw,42px);margin-top:48px;align-items:start}
+@media(max-width:980px){.map-wrap{grid-template-columns:1fr}}
+.map-panel{border:1px solid var(--line);border-radius:18px;background:
+ radial-gradient(700px 500px at 30% 20%,rgba(79,165,140,.08),transparent 60%),
+ linear-gradient(170deg,rgba(14,42,43,.6),rgba(7,17,20,.3));padding:clamp(10px,1.6vw,22px);position:relative;overflow:hidden}
+.map-panel svg{width:100%;height:auto;display:block}
+.mp-note{position:absolute;bottom:12px;right:18px;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--foam);opacity:.75}
+.mp-coord{position:absolute;bottom:12px;left:18px;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--foam);opacity:.75}
+.zone{cursor:pointer;outline:none}
+.zone .zbase{transition:all .35s}
+.zone:hover .zbase,.zone:focus-visible .zbase,.zone.active .zbase{filter:drop-shadow(0 0 7px rgba(107,199,169,.75))}
+.zone.active .zring{opacity:1}
+.zring{opacity:0;transition:opacity .3s}
+.map-lbl{font-family:'Space Grotesk',sans-serif;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;fill:var(--foam)}
+.map-lbl.j{fill:var(--jade-bright)}
+.map-lbl.c{fill:#D8A57F}
+.map-lbl.s{fill:rgba(232,220,195,.8)}
+.info{border:1px solid var(--line);border-radius:18px;padding:clamp(22px,2.4vw,34px);background:linear-gradient(165deg,rgba(14,42,43,.78),rgba(10,26,29,.5));min-height:320px;position:sticky;top:24px}
+.info .it{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.2vw,30px);margin-bottom:6px}
+.info .im{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--jade-bright);margin-bottom:16px}
+.info .ib{color:var(--foam);font-size:14.5px}
+.info .ib strong{color:var(--sand);font-weight:500}
+.info-hint{margin-top:22px;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--foam);opacity:.7;display:flex;align-items:center;gap:9px}
+.info-hint::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--jade-bright);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.zlist{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.zbtn{background:none;border:1px solid var(--line);color:var(--foam);font-family:inherit;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 13px;border-radius:999px;cursor:pointer;transition:all .25s}
+.zbtn:hover,.zbtn.active{border-color:var(--jade);color:var(--jade-bright)}
+.zbtn:focus-visible{outline:2px solid var(--jade-bright);outline-offset:2px}
+
+.interlude{background:radial-gradient(900px 480px at 50% 0%,rgba(176,123,79,.14),transparent 65%),var(--abismo);text-align:center}
+.interlude p.mani{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(24px,3.2vw,44px);line-height:1.3;max-width:22ch;margin:0 auto}
+.pillars{margin-top:50px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);border-radius:999px;padding:9px 20px;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--foam)}
+.pill.c{border-color:rgba(176,123,79,.5);color:var(--cacao)}
+
+.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+@media(max-width:1100px){.brand-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.brand-grid{grid-template-columns:1fr}}
+.bcard{border:1px solid var(--line);border-radius:14px;padding:24px;background:linear-gradient(165deg,rgba(14,42,43,.6),rgba(10,26,29,.4))}
+.bcard.hi{border-color:rgba(107,199,169,.5);background:linear-gradient(165deg,rgba(79,165,140,.18),rgba(10,26,29,.55))}
+.bcard .bn{font-family:'Fraunces',serif;font-size:21px;margin-bottom:4px}
+.bcard.hi .bn{color:var(--jade-bright)}
+.bcard .bp{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--foam);margin-bottom:14px}
+.bcard .be{font-size:13.5px;color:var(--foam)}
+.bcard .be strong{color:var(--sand);font-weight:500}
+.bchips{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px}
+.bchip{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--foam)}
+.bchip.on{border-color:rgba(107,199,169,.5);color:var(--jade-bright)}
+.posmap{margin-top:52px;border:1px solid var(--line);border-radius:16px;padding:clamp(16px,2.4vw,32px);background:linear-gradient(180deg,rgba(14,42,43,.4),transparent)}
+.posmap svg{width:100%;height:auto;display:block}
+.posmap text{font-family:'Space Grotesk',sans-serif}
+.pos-ax{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;fill:var(--foam)}
+.pos-nm{font-size:11.5px;fill:var(--sand)}
+.pos-nm.j{fill:var(--jade-bright);font-weight:600}
+.quote-card{margin-top:40px;border-left:2px solid var(--jade);padding:22px 28px;background:linear-gradient(90deg,rgba(79,165,140,.1),transparent);border-radius:0 14px 14px 0;max-width:760px}
+.quote-card p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,1.6vw,20px);color:var(--sand)}
+.quote-card .qa{margin-top:12px;font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--foam)}
+
+.wf-wrap{margin-top:46px;background:linear-gradient(180deg,rgba(14,42,43,.5),rgba(7,17,20,0));border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,42px)}
+.wf{width:100%;height:auto;display:block}
+.wf text{font-family:'Space Grotesk',sans-serif}
+.wf .lbl{fill:var(--foam);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
+.wf .val{fill:var(--sand);font-size:14.5px;font-weight:600}
+.wf .val.j{fill:var(--jade-bright)}.wf .val.c{fill:#D8A57F}
+.wf rect{transform-box:fill-box;transform:scaleY(0);transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.wf rect.up{transform-origin:bottom}.wf rect.dn{transform-origin:top}
+.wf.in rect{transform:scaleY(1)}
+.wf .r2{transition-delay:.25s}.wf .r3{transition-delay:.5s}.wf .r4{transition-delay:.75s}.wf .r5{transition-delay:1.05s}
+.wf .link{stroke:var(--foam);stroke-dasharray:3 5;stroke-width:1;opacity:.45}
+.wf .excline{stroke:var(--jade-bright);stroke-width:1;stroke-dasharray:2 4;opacity:.8}
+
+.ladder{margin-top:44px;display:flex;flex-direction:column;gap:16px}
+.lrow{display:grid;grid-template-columns:230px 1fr 110px;gap:16px;align-items:center}
+@media(max-width:760px){.lrow{grid-template-columns:1fr;gap:6px}.lrow .lval{text-align:left}}
+.lname{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--foam)}
+.lname b{color:var(--sand);font-weight:500}
+.ltrack{height:26px;background:rgba(147,173,165,.07);border-radius:6px;overflow:hidden}
+.lbar{height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,rgba(147,173,165,.35),rgba(147,173,165,.55));transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.lbar.j{background:linear-gradient(90deg,var(--jade),var(--jade-bright));box-shadow:0 0 18px rgba(107,199,169,.35)}
+.lval{font-size:16px;font-weight:600;text-align:right;color:var(--sand)}
+.lval.j{color:var(--jade-bright)}
+.traj{margin-top:40px;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,2.5vw,34px);background:linear-gradient(180deg,rgba(14,42,43,.4),transparent)}
+.traj svg{width:100%;height:auto;display:block}
+.traj .w-line{fill:none;stroke:var(--ambar);stroke-width:2;stroke-dasharray:800;stroke-dashoffset:800;transition:stroke-dashoffset 2s ease .3s}
+.traj .k-line{fill:none;stroke:var(--jade-bright);stroke-width:2;stroke-dasharray:700;stroke-dashoffset:700;transition:stroke-dashoffset 1.6s ease}
+.traj.in .w-line,.traj.in .k-line{stroke-dashoffset:0}
+.traj text{font-family:'Space Grotesk',sans-serif;font-size:11px;fill:var(--foam)}
+.traj .tl{font-size:12.5px;font-weight:600}
+.chart-legend{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--foam)}
+.chart-legend i{display:inline-block;width:22px;height:2px;vertical-align:3px;margin-right:8px}
+.res-note{margin-top:26px;font-size:13px;color:var(--foam);max-width:700px}
+
+.sim{background:radial-gradient(1000px 600px at 85% 10%,rgba(79,165,140,.1),transparent 60%),var(--abismo)}
+.presets{display:flex;gap:10px;flex-wrap:wrap;margin:38px 0 30px}
+.preset{background:none;border:1px solid var(--line);color:var(--foam);font-family:inherit;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;padding:11px 20px;border-radius:999px;cursor:pointer;transition:all .25s}
+.preset:hover{border-color:var(--jade);color:var(--jade-bright)}
+.preset.active{border-color:var(--jade);color:var(--ink);background:linear-gradient(90deg,var(--jade),var(--jade-bright));font-weight:600}
+.preset:focus-visible{outline:2px solid var(--jade-bright);outline-offset:3px}
+.sim-grid{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:clamp(24px,4vw,60px)}
+@media(max-width:1020px){.sim-grid{grid-template-columns:1fr}}
+.ctrl{margin-bottom:24px}
+.ctrl label{display:flex;justify-content:space-between;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--foam);margin-bottom:10px}
+.ctrl label output{color:var(--jade-bright);font-weight:600;letter-spacing:.05em;font-size:13px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:linear-gradient(90deg,var(--jade) var(--fill,50%),rgba(147,173,165,.18) var(--fill,50%));border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--sand);border:2px solid var(--jade);cursor:pointer;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--sand);border:2px solid var(--jade);cursor:pointer}
+input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(107,199,169,.35)}
+.reset{margin-top:6px;background:none;border:1px solid var(--line);color:var(--sand);font-family:inherit;font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding:13px 24px;border-radius:999px;cursor:pointer;transition:all .3s}
+.reset:hover{border-color:var(--jade);color:var(--jade-bright)}
+.reset:focus-visible{outline:2px solid var(--jade-bright);outline-offset:3px}
+.base-chip{display:inline-flex;align-items:center;gap:9px;margin-left:14px;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--foam);opacity:0;transition:opacity .4s}
+.base-chip.on{opacity:1;color:var(--jade-bright)}
+.base-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--jade-bright);box-shadow:0 0 10px var(--jade-bright)}
+.out-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.out-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.out-grid{grid-template-columns:1fr}}
+.out{background:linear-gradient(165deg,rgba(14,42,43,.75),rgba(10,26,29,.45));border:1px solid var(--line);border-radius:14px;padding:22px}
+.out .k{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--foam);margin-bottom:12px;min-height:26px}
+.out .v{font-size:clamp(21px,1.9vw,28px);font-weight:600;color:var(--sand);transition:color .3s}
+.out .v.neg{color:var(--coral)}.out .v.pos{color:var(--jade-bright)}
+.out .s{margin-top:8px;font-size:11.5px;color:var(--foam)}
+.out.wide{grid-column:span 3}
+@media(max-width:760px){.out.wide{grid-column:span 2}}
+@media(max-width:520px){.out.wide{grid-column:span 1}}
+.gauge-wrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.gauge{width:190px;flex:none}
+.gauge .needle{transform-origin:95px 95px;transition:transform .5s cubic-bezier(.3,1.4,.4,1)}
+.gauge text{font-family:'Space Grotesk',sans-serif;fill:var(--foam);font-size:10px}
+.dscr-read{font-size:clamp(30px,3vw,44px);font-weight:700;line-height:1}
+.dscr-note{font-size:12px;color:var(--foam);margin-top:8px;max-width:300px}
+
+/* heatmap */
+.hm-wrap{margin-top:64px}
+.hm{display:grid;grid-template-columns:70px repeat(9,1fr);gap:4px;margin-top:26px}
+.hm .hx{font-size:10px;color:var(--foam);display:flex;align-items:center;justify-content:center;letter-spacing:.06em}
+.hm .hy{font-size:10px;color:var(--foam);display:flex;align-items:center;justify-content:flex-end;padding-right:8px;letter-spacing:.06em}
+.hm-cell{border-radius:5px;font-size:10.5px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:8px 0;color:var(--ink);transition:transform .15s}
+.hm-cell:hover{transform:scale(1.08)}
+.hm-cell.c1{background:rgba(201,106,90,.85)}
+.hm-cell.c2{background:rgba(217,164,65,.85)}
+.hm-cell.c3{background:rgba(79,165,140,.85)}
+.hm-cell.c4{background:rgba(107,199,169,.95)}
+.hm-cell.here{outline:2px solid var(--sand);outline-offset:1px}
+@media(max-width:760px){.hm{grid-template-columns:54px repeat(9,1fr)}.hm-cell{font-size:8.5px;padding:6px 0}}
+
+/* anatomía del NOI */
+.flow{margin-top:64px}
+.fl-bar{display:flex;height:46px;border-radius:9px;overflow:hidden;border:1px solid var(--line);margin-top:14px}
+.fl-bar div{display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;min-width:0;transition:width .4s ease}
+.fs1{background:linear-gradient(180deg,var(--jade-bright),var(--jade))}
+.fs2{background:linear-gradient(180deg,#CBB98F,#B3A079)}
+.fs3{background:linear-gradient(180deg,#8FA8A0,#748E86)}
+.fc1{background:rgba(147,173,165,.45);color:var(--sand)}
+.fc2{background:rgba(176,123,79,.6);color:var(--sand)}
+.fc3{background:linear-gradient(180deg,var(--jade-bright),var(--jade))}
+.fd1{background:rgba(201,106,90,.75);color:var(--sand)}
+.fd2{background:linear-gradient(180deg,var(--jade-bright),var(--jade))}
+.fl-lab{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--foam);margin-top:22px}
+.fl-leg{display:flex;gap:22px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--foam)}
+.fl-leg b{color:var(--sand);font-weight:600}
+
+/* timeline */
+.tl-wrap{margin-top:50px;border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,40px);background:linear-gradient(180deg,rgba(14,42,43,.4),transparent);overflow-x:auto}
+.tl-inner{min-width:640px}
+.tl-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--foam);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.tl-axis{height:1px;background:var(--line);margin-bottom:26px;position:relative}
+.tl-row{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center;margin-bottom:16px}
+@media(max-width:760px){.tl-row{grid-template-columns:140px 1fr}}
+.tl-name{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--foam)}
+.tl-name b{color:var(--sand);font-weight:500;display:block}
+.tl-track{height:22px;position:relative}
+.tl-bar{position:absolute;top:0;height:100%;border-radius:6px;font-size:9.5px;letter-spacing:.08em;display:flex;align-items:center;padding:0 10px;color:var(--ink);font-weight:600;white-space:nowrap}
+.tb-r{background:rgba(201,106,90,.7);color:var(--sand)}
+.tb-a{background:rgba(217,164,65,.8)}
+.tb-g{background:linear-gradient(90deg,var(--jade),var(--jade-bright))}
+.tl-mark{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--jade-bright);box-shadow:0 0 10px var(--jade-bright)}
+
+/* mercadeo + factibilidad */
+.mkt .mrow{display:grid;grid-template-columns:88px 260px 1fr;gap:clamp(16px,3vw,40px);padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
+@media(max-width:860px){.mkt .mrow{grid-template-columns:1fr}}
+.mkt .mrow:last-child{border-bottom:none}
+.mnum{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(30px,3vw,46px);color:var(--cacao);line-height:1}
+.mt{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);font-weight:500;padding-top:8px}
+.mb{color:var(--foam);font-size:14.5px;padding-top:6px;max-width:620px}
+.mb strong{color:var(--sand);font-weight:500}
+.feas{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+@media(max-width:860px){.feas{grid-template-columns:1fr}}
+.fbox{border:1px solid var(--line);border-radius:16px;padding:clamp(22px,2.6vw,34px);background:linear-gradient(165deg,rgba(14,42,43,.6),rgba(10,26,29,.4))}
+.fbox.mit{border-color:rgba(107,199,169,.35)}
+.fbox h4{font-family:'Fraunces',serif;font-weight:400;font-size:22px;margin-bottom:20px}
+.fbox.mit h4{color:var(--jade-bright)}
+.fbox.rie h4{color:var(--coral)}
+.fbox ul{list-style:none}
+.fbox li{padding:12px 0 12px 26px;position:relative;font-size:14px;color:var(--foam);border-bottom:1px solid rgba(147,173,165,.08)}
+.fbox li:last-child{border-bottom:none}
+.fbox li strong{color:var(--sand);font-weight:500}
+.fbox.rie li::before{content:"";position:absolute;left:2px;top:20px;width:8px;height:8px;border:1.5px solid var(--coral);border-radius:2px;transform:rotate(45deg)}
+.fbox.mit li::before{content:"";position:absolute;left:2px;top:19px;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--jade-bright)}
+.prog-strip{margin-top:26px;border:1px solid var(--line);border-radius:999px;padding:16px 28px;display:flex;justify-content:center;gap:clamp(16px,3vw,44px);flex-wrap:wrap;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--foam)}
+.prog-strip b{color:var(--sand);font-weight:600}
+.prog-strip i{color:var(--jade-bright);font-style:normal;font-weight:600}
+
+.stack{margin-top:40px}
+.stack-bar{display:flex;height:52px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.stack-bar div{height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden}
+.sk1{background:linear-gradient(180deg,var(--jade-bright),var(--jade))}
+.sk2{background:linear-gradient(180deg,#CBB98F,#B3A079)}
+.sk3{background:linear-gradient(180deg,#8FA8A0,#748E86)}
+.stack-leg{display:flex;gap:26px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--foam)}
+.stack-leg b{color:var(--sand);font-weight:600}
+.routes{margin-top:34px;display:flex;flex-wrap:wrap;gap:9px}
+.route{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--foam)}
+.route.daily{border-color:rgba(107,199,169,.5);color:var(--jade-bright)}
+
+.cierre{background:radial-gradient(1100px 640px at 50% 100%,rgba(79,165,140,.16),transparent 62%),var(--ink);text-align:center}
+.cierre .big{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(29px,4.2vw,56px);line-height:1.16;max-width:25ch;margin:0 auto}
+.cierre .big em{font-style:italic;color:var(--jade-bright)}
+.leyenda{margin:56px auto 0;max-width:760px;border:1px solid var(--line);border-radius:14px;padding:24px 28px;font-size:12.5px;color:var(--foam);display:flex;gap:28px;flex-wrap:wrap;justify-content:center}
+footer{padding:44px clamp(22px,7vw,110px);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--foam)}
+.f-logo{height:30px;width:auto}
+
+.spreset{background:none;border:1px solid var(--line);color:var(--foam);font-family:inherit;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;padding:11px 19px;border-radius:999px;cursor:pointer;transition:all .25s}
+.spreset:hover{border-color:var(--jade);color:var(--jade-bright)}
+.spreset.active{border-color:var(--jade);color:var(--ink);background:linear-gradient(90deg,var(--jade),var(--jade-bright));font-weight:600}
+.spreset.storm.active{border-color:var(--coral);background:linear-gradient(90deg,#A85648,var(--coral))}
+.spreset:focus-visible{outline:2px solid var(--jade-bright);outline-offset:3px}
+.out .v.warn{color:var(--ambar)}
+.verdict{border-radius:16px;border:1px solid var(--line);padding:26px 28px;display:flex;gap:20px;align-items:flex-start;transition:all .4s}
+.verdict .light{width:16px;height:16px;border-radius:50%;flex:none;margin-top:5px;transition:all .4s}
+.verdict.v-g{border-color:rgba(107,199,169,.45);background:linear-gradient(120deg,rgba(79,165,140,.14),transparent)}
+.verdict.v-g .light{background:var(--jade-bright);box-shadow:0 0 18px var(--jade-bright)}
+.verdict.v-a{border-color:rgba(217,164,65,.45);background:linear-gradient(120deg,rgba(217,164,65,.12),transparent)}
+.verdict.v-a .light{background:var(--ambar);box-shadow:0 0 18px var(--ambar)}
+.verdict.v-r{border-color:rgba(201,106,90,.5);background:linear-gradient(120deg,rgba(201,106,90,.14),transparent)}
+.verdict.v-r .light{background:var(--coral);box-shadow:0 0 18px var(--coral)}
+.verdict .vt{font-family:'Fraunces',serif;font-size:clamp(18px,1.8vw,24px);margin-bottom:6px}
+.verdict .vb{font-size:13.5px;color:var(--foam)}
+.verdict .vb strong{color:var(--sand);font-weight:500}
+.tl-mark.debt{background:var(--ambar);box-shadow:0 0 10px var(--ambar);transition:left .3s}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .wf rect{transform:scaleY(1)}
+  .traj .w-line,.traj .k-line{stroke-dashoffset:0}
+  #stars{display:none}
+}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true"><symbol id="kaira-mark" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#E8DCC3" stroke-width="2"/>
+  <circle cx="32" cy="25" r="6" fill="#6BC7A9"/>
+  <line x1="8" y1="38" x2="56" y2="38" stroke="#E8DCC3" stroke-width="2"/>
+  <path d="M14,47 Q21,42 28,47 T42,47 T50,47" fill="none" stroke="#4FA58C" stroke-width="2" stroke-linecap="round"/>
+</symbol></svg>
+
+<div class="progress" id="prog"></div>
+
+<aside class="rail">
+  <svg class="rail-logo"><use href="#kaira-mark"/></svg>
+  <nav class="rail-nav" id="railnav">
+    <a href="#c1" title="La leyenda">I</a>
+    <a href="#c2" title="La carta de la isla">II</a>
+    <a href="#c3" title="La marca">III</a>
+    <a href="#c4" title="El territorio">IV</a>
+    <a href="#c5" title="El motor financiero">V</a>
+    <a href="#c6" title="El hotel">VI</a>
+    <a href="#c7" title="Sala de mareas">VII</a>
+    <a href="#c8" title="Respaldo residencial">VIII</a>
+    <a href="#c9" title="La demanda">IX</a>
+    <a href="#c10" title="El huésped">X</a>
+    <a href="#c11" title="El plan de mercadeo">XI</a>
+    <a href="#c12" title="La ruta">XII</a>
+    <a href="#c13" title="Factibilidad">XIII</a>
+    <a href="#c14" title="La prueba de fuego">XIV</a>
+  </nav>
+  <div class="rail-foot">Fort Morgan Cay</div>
+</aside>
+
+<main>
+
+<!-- ══ PORTADA ══ -->
+<section class="hero" id="portada">
+  <canvas id="stars"></canvas>
+  <div class="hero-inner">
+    <div class="logo-lock rv">
+      <svg style="height:clamp(52px,6vw,74px);width:auto" viewBox="0 0 64 64"><use href="#kaira-mark"/></svg>
+      <div>
+        <div class="logo-word">KAIRA</div>
+        <div class="logo-tag">El Bali del Caribe</div>
+      </div>
+    </div>
+    <h1 class="rv d1">El plan maestro:<br>marca, isla y <em>modelo completo.</em></h1>
+    <p class="hero-sub rv d2">Fort Morgan Cay, Roatán, Honduras. La antigua fortaleza de Henry Morgan convertida en el primer santuario de bienestar con marca propia del Caribe hondureño. Trece capítulos: leyenda, territorio, cifras, mercado y estrategia.</p>
+    <p class="hero-cred rv d2">Preparado por <b>Rodrigo Samour</b> · HAUS</p>
+    <div class="hero-meta rv d3">
+      <span>Isla privada · <b>20 acres</b></span>
+      <span>Lotes · <b>30</b></span>
+      <span>Llaves · <b>25</b></span>
+      <span>Excedente · <b>$6,170,000</b></span>
+    </div>
+  </div>
+  <svg class="tide" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,70 C240,40 480,100 720,70 C960,40 1200,100 1440,70"/>
+    <path d="M0,92 C240,62 480,122 720,92 C960,62 1200,122 1440,92" opacity=".5"/>
+  </svg>
+  <div class="scrolldown">Descender</div>
+</section>
+
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker">
+    <span>Excedente residencial <i>$6,170,000</i></span>
+    <span>30 lotes × <b>$800,000</b> = <b>$24,000,000</b></span>
+    <span>Fuerte de Henry Morgan · <b>siglo XVII</b></span>
+    <span>Roatán 2024 · <b>2,793,217</b> visitantes</span>
+    <span>ADR set competitivo 2024 · <b>$816</b></span>
+    <span>Aeropuerto · <b>11</b> rutas directas internacionales</span>
+    <span>Manglar protegido · <b>8.54 acres</b></span>
+    <span>Absorción Caye Chapel · <b>1.75</b> unidades por mes</span>
+    <span>Excedente residencial <i>$6,170,000</i></span>
+    <span>30 lotes × <b>$800,000</b> = <b>$24,000,000</b></span>
+    <span>Fuerte de Henry Morgan · <b>siglo XVII</b></span>
+    <span>Roatán 2024 · <b>2,793,217</b> visitantes</span>
+    <span>ADR set competitivo 2024 · <b>$816</b></span>
+    <span>Aeropuerto · <b>11</b> rutas directas internacionales</span>
+    <span>Manglar protegido · <b>8.54 acres</b></span>
+    <span>Absorción Caye Chapel · <b>1.75</b> unidades por mes</span>
+  </div>
+</div>
+
+<!-- ══ CAP I · LA LEYENDA ══ -->
+<section class="legend-sec" id="c1">
+  <div class="eyebrow rv">Capítulo I · La leyenda</div>
+  <h2 class="display rv d1">Trescientos años esperando <em>al proyecto correcto</em></h2>
+  <div class="hist">
+    <p class="lede rv d2">En el siglo XVII, el capitán <strong>Henry Morgan</strong> levantó aquí un fuerte para resguardar su flota. Tras trescientos años de abandono, <strong>las ruinas siguen en pie sobre la isla</strong>. Ninguna marca del mundo puede comprar esa capa de historia: KAIRA nace encima de una leyenda real, con nombre y fecha.</p>
+    <div class="rv d3">
+      <p class="quote">Donde la leyenda ancla el futuro: un refugio insular que redefine el lujo desde la sostenibilidad y el respeto cultural, donde el huésped <em>se une al océano</em>, se sumerge en la belleza natural de Honduras y habita su herencia viva.</p>
+      <p class="quote-att">Visión del proyecto · adaptada del taller original a la voz de KAIRA</p>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP II · LA CARTA DE LA ISLA ══ -->
+<section id="c2">
+  <div class="eyebrow rv">Capítulo II · La carta de la isla</div>
+  <h2 class="display rv d1">Cuatro territorios, <em>leídos como carta náutica</em></h2>
+  <p class="lede rv d2">El taller de julio de 2025 organizó la isla en cuatro territorios: <strong>el santuario</strong> de manglar al oeste, <strong>la aldea</strong> de llegada al centro, <strong>las residencias</strong> en la franja este y <strong>el hotel</strong> en la punta oriental, con las llaves overwater extendiéndose hacia el este. Toque cada zona para leer su papel dentro del modelo.</p>
+
+  <div class="map-wrap rv d2">
+    <div class="map-panel">
+      <svg id="isla-svg" viewBox="0 0 1000 580" role="img" aria-label="Carta estilizada de Fort Morgan Cay según el masterplan">
+        <defs>
+          <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(79,165,140,.5)" stroke-width="1.2"/>
+          </pattern>
+        </defs>
+
+        <ellipse cx="480" cy="320" rx="410" ry="200" fill="none" stroke="rgba(147,173,165,.09)" stroke-dasharray="2 7"/>
+        <ellipse cx="480" cy="320" rx="470" ry="242" fill="none" stroke="rgba(147,173,165,.06)" stroke-dasharray="2 7"/>
+
+        <g class="zone" data-z="arrecife" tabindex="0" role="button" aria-label="Arrecife Mesoamericano">
+          <path class="zhit" d="M100,122 C340,58 680,60 920,132" fill="none" stroke="transparent" stroke-width="34"/>
+          <path class="zbase" d="M100,122 C340,58 680,60 920,132" fill="none" stroke="var(--jade)" stroke-width="1.5" stroke-dasharray="8 8" opacity=".55"/>
+          <text class="map-lbl j" x="500" y="88" text-anchor="middle">Arrecife Mesoamericano</text>
+        </g>
+
+        <path d="M120,300 C120,244 168,204 232,199 C296,194 344,224 366,262 C382,238 414,226 452,222 C540,214 646,218 722,240 C766,252 800,270 812,292 C818,308 806,326 776,338 C712,362 588,374 486,370 C444,368 410,358 392,340 C368,364 322,378 272,374 C196,368 120,352 120,300 Z"
+          fill="rgba(232,220,195,.09)" stroke="rgba(232,220,195,.5)" stroke-width="1.5"/>
+
+        <path d="M452,368 C560,376 660,368 738,348" fill="none" stroke="rgba(232,220,195,.45)" stroke-width="5" stroke-linecap="round"/>
+        <text class="map-lbl s" x="596" y="398" text-anchor="middle">Playa sur</text>
+
+        <path id="lotN" d="M470,246 C560,232 660,236 726,254" fill="none" stroke="none"/>
+        <path id="lotS" d="M472,356 C560,364 650,360 716,344" fill="none" stroke="none"/>
+
+        <g class="zone" data-z="santuario" tabindex="0" role="button" aria-label="El santuario de manglar">
+          <path class="zbase" d="M120,300 C120,244 168,204 232,199 C296,194 344,224 366,262 C376,282 378,308 368,330 C346,362 306,376 272,374 C196,368 120,352 120,300 Z"
+            fill="url(#hatch)" stroke="rgba(79,165,140,.6)" stroke-width="1.4"/>
+          <path d="M180,272 C204,244 258,240 286,262 C306,278 300,308 274,320 C242,334 196,326 182,302 Z" fill="none" stroke="rgba(147,173,165,.5)" stroke-width="1" stroke-dasharray="3 4"/>
+          <path d="M212,318 C236,332 268,334 292,320" fill="none" stroke="rgba(147,173,165,.4)" stroke-width="1" stroke-dasharray="3 4"/>
+          <path class="zring" d="M120,300 C120,244 168,204 232,199 C296,194 344,224 366,262 C376,282 378,308 368,330 C346,362 306,376 272,374 C196,368 120,352 120,300 Z"
+            fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <text class="map-lbl j" x="242" y="418" text-anchor="middle">El santuario · 8.54 acres</text>
+        </g>
+
+        <g class="zone" data-z="aldea" tabindex="0" role="button" aria-label="La aldea y la llegada">
+          <rect class="zhit" x="386" y="316" width="90" height="160" fill="transparent"/>
+          <circle class="zring" cx="430" cy="392" r="46" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <g class="zbase">
+            <rect x="414" y="330" width="7" height="7" fill="rgba(232,220,195,.35)" stroke="rgba(232,220,195,.7)" stroke-width=".8"/>
+            <rect x="428" y="326" width="7" height="7" fill="rgba(232,220,195,.35)" stroke="rgba(232,220,195,.7)" stroke-width=".8"/>
+            <rect x="442" y="332" width="7" height="7" fill="rgba(232,220,195,.35)" stroke="rgba(232,220,195,.7)" stroke-width=".8"/>
+            <rect x="422" y="344" width="7" height="7" fill="rgba(232,220,195,.35)" stroke="rgba(232,220,195,.7)" stroke-width=".8"/>
+            <rect x="437" y="346" width="7" height="7" fill="rgba(232,220,195,.35)" stroke="rgba(232,220,195,.7)" stroke-width=".8"/>
+            <line x1="430" y1="366" x2="430" y2="452" stroke="rgba(232,220,195,.6)" stroke-width="2.5"/>
+            <line x1="422" y1="390" x2="438" y2="390" stroke="rgba(232,220,195,.45)" stroke-width="1.5"/>
+            <line x1="422" y1="414" x2="438" y2="414" stroke="rgba(232,220,195,.45)" stroke-width="1.5"/>
+            <path d="M430,470 l-9,-14 h18 z" fill="rgba(147,173,165,.85)"/>
+          </g>
+          <text class="map-lbl s" x="430" y="496" text-anchor="middle">La aldea · llegada</text>
+        </g>
+
+        <g class="zone" data-z="lotes" tabindex="0" role="button" aria-label="Zona residencial de 30 lotes">
+          <path class="zhit" d="M470,246 C560,232 660,236 726,254" fill="none" stroke="transparent" stroke-width="40"/>
+          <path class="zhit" d="M472,356 C560,364 650,360 716,344" fill="none" stroke="transparent" stroke-width="40"/>
+          <path class="zring" d="M470,246 C560,232 660,236 726,254" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <path class="zring" d="M472,356 C560,364 650,360 716,344" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <g id="plots" class="zbase"></g>
+          <text class="map-lbl j" x="596" y="208" text-anchor="middle">Las residencias · 30 lotes</text>
+        </g>
+
+        <g class="zone" data-z="fuerte" tabindex="0" role="button" aria-label="Fuerte de Henry Morgan">
+          <circle class="zhit" cx="410" cy="252" r="34" fill="transparent"/>
+          <circle class="zring" cx="410" cy="252" r="30" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <g class="zbase">
+            <rect x="399.5" y="241.5" width="21" height="21" fill="rgba(176,123,79,.2)" stroke="#D8A57F" stroke-width="1.5" transform="rotate(45 410 252)"/>
+            <rect x="406" y="248" width="8" height="8" fill="none" stroke="#D8A57F" stroke-width="1.1" transform="rotate(45 410 252)"/>
+            <line x1="410" y1="237" x2="410" y2="221" stroke="#D8A57F" stroke-width="1.3"/>
+            <path d="M410,221 l13,4 -13,4 z" fill="var(--cacao)"/>
+          </g>
+          <text class="map-lbl c" x="410" y="206" text-anchor="middle">Fuerte de Morgan</text>
+        </g>
+
+        <g class="zone" data-z="hotel" tabindex="0" role="button" aria-label="Hotel KAIRA de 21 bungalows">
+          <ellipse class="zhit" cx="752" cy="298" rx="58" ry="36" fill="transparent"/>
+          <ellipse class="zring" cx="752" cy="298" rx="52" ry="30" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <g id="bungs" class="zbase"></g>
+          <text class="map-lbl j" x="752" y="252" text-anchor="middle">El hotel · 21 bungalows</text>
+        </g>
+
+        <g class="zone" data-z="over" tabindex="0" role="button" aria-label="Cuatro llaves overwater al este">
+          <circle class="zhit" cx="884" cy="276" r="42" fill="transparent"/>
+          <circle class="zring" cx="884" cy="276" r="36" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <g class="zbase">
+            <line x1="812" y1="292" x2="866" y2="272" stroke="rgba(232,220,195,.55)" stroke-width="2.5"/>
+            <circle cx="882" cy="254" r="6" fill="rgba(107,199,169,.95)"/>
+            <circle cx="898" cy="272" r="6" fill="rgba(107,199,169,.95)"/>
+            <circle cx="890" cy="292" r="6" fill="rgba(107,199,169,.95)"/>
+            <circle cx="868" cy="304" r="6" fill="rgba(107,199,169,.95)"/>
+            <line x1="882" y1="260" x2="882" y2="270" stroke="rgba(147,173,165,.5)"/>
+            <line x1="898" y1="278" x2="898" y2="288" stroke="rgba(147,173,165,.5)"/>
+            <line x1="890" y1="298" x2="890" y2="308" stroke="rgba(147,173,165,.5)"/>
+            <line x1="868" y1="310" x2="868" y2="320" stroke="rgba(147,173,165,.5)"/>
+          </g>
+          <text class="map-lbl j" x="896" y="344" text-anchor="middle">4 overwater · este</text>
+        </g>
+
+        <g class="zone" data-z="marina" tabindex="0" role="button" aria-label="Marina protegida">
+          <circle class="zhit" cx="804" cy="358" r="34" fill="transparent"/>
+          <circle class="zring" cx="804" cy="358" r="28" fill="none" stroke="var(--jade-bright)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <g class="zbase">
+            <path d="M776,342 Q812,352 826,372" fill="none" stroke="rgba(147,173,165,.7)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="796" cy="356" r="2.6" fill="rgba(232,220,195,.8)"/>
+            <circle cx="806" cy="362" r="2.6" fill="rgba(232,220,195,.8)"/>
+          </g>
+          <text class="map-lbl s" x="836" y="398" text-anchor="middle">Marina</text>
+        </g>
+
+        <g aria-hidden="true">
+          <line x1="936" y1="104" x2="936" y2="60" stroke="rgba(147,173,165,.6)" stroke-width="1.4"/>
+          <path d="M936,54 l-7,15 h14 z" fill="var(--jade-bright)"/>
+          <text class="map-lbl" x="936" y="44" text-anchor="middle">N</text>
+        </g>
+      </svg>
+      <div class="mp-coord">16° N · 86° O · Mar Caribe</div>
+      <div class="mp-note">Carta estilizada según el masterplan del taller · no a escala</div>
+    </div>
+
+    <div class="info">
+      <div class="it" id="inf-t">Fort Morgan Cay</div>
+      <div class="im" id="inf-m"><span class="dot dg"></span>20 acres · isla privada</div>
+      <div class="ib" id="inf-b">Dos secciones: <strong>11.37 acres desarrollables</strong> de terreno plano que no requiere nivelaciones sustanciales, y <strong>8.54 acres de manglar protegido</strong>. Cuatro territorios definidos en el taller: santuario, aldea, residencias y hotel.</div>
+      <div class="info-hint">Toque las zonas de la carta</div>
+      <div class="zlist">
+        <button class="zbtn active" data-z="isla">Isla</button>
+        <button class="zbtn" data-z="santuario">Santuario</button>
+        <button class="zbtn" data-z="aldea">Aldea</button>
+        <button class="zbtn" data-z="lotes">Lotes</button>
+        <button class="zbtn" data-z="hotel">Hotel</button>
+        <button class="zbtn" data-z="over">Overwater</button>
+        <button class="zbtn" data-z="marina">Marina</button>
+        <button class="zbtn" data-z="fuerte">Fuerte</button>
+        <button class="zbtn" data-z="arrecife">Arrecife</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+<!-- ══ CAP III · LA MARCA ══ -->
+<section class="interlude" id="c3">
+  <div class="eyebrow rv" style="justify-content:center">Capítulo III · La marca</div>
+  <p class="mani rv d1">KAIRA no compra una bandera.<br><span class="cacao">La construye.</span></p>
+  <p class="lede rv d2" style="margin:30px auto 0;text-align:center">Santuario de bienestar de espíritu balinés y tailandés, con alma hondureña: sanación garífuna, ceremonia maya de cacao y el arrecife como templo. La independencia de marca no es un ahorro: es la tesis. Cero regalías, control narrativo total, y todo el valor de marca queda en casa.</p>
+  <div class="pillars rv d3">
+    <span class="pill c">Sanación garífuna</span>
+    <span class="pill c">Cacao maya</span>
+    <span class="pill c">Arrecife mesoamericano</span>
+    <span class="pill">Sin bandera · sin regalías</span>
+    <span class="pill">Marca 100% propia</span>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP IV · EL TERRITORIO ══ -->
+<section id="c4">
+  <div class="eyebrow rv">Capítulo IV · El territorio de marca</div>
+  <h2 class="display rv d1">El panteón donde KAIRA <em>quiere sentarse</em></h2>
+  <p class="lede rv d2">Cinco referencias definen la categoría del santuario insular. KAIRA no las copia: toma el estándar de cada una y le suma lo que ninguna tiene, <strong>una leyenda pirata real y el alma de Honduras</strong>.</p>
+
+  <div class="brand-grid">
+    <div class="bcard rv"><div class="bn">Aman</div><div class="bp">Colección global</div><div class="be">El estándar absoluto del santuario: silencio, escala mínima y una devoción de culto (<strong>los Amanjunkies</strong>).</div><div class="bchips"><span class="bchip on">Wellness</span><span class="bchip on">Escala íntima</span><span class="bchip">Isla privada</span></div></div>
+    <div class="bcard rv d1"><div class="bn">Nihi Sumba</div><div class="bp">Sumba · Indonesia</div><div class="be">Lujo salvaje con propósito: surf, caballos y comunidad. <strong>El anti resort</strong> que define la aventura consciente.</div><div class="bchips"><span class="bchip on">Wellness</span><span class="bchip on">Marca independiente</span><span class="bchip">Isla privada</span></div></div>
+    <div class="bcard rv d2"><div class="bn">COMO Parrot Cay</div><div class="bp">Turcas y Caicos</div><div class="be">Bienestar serio en isla privada. <strong>El manual que el propio estudio recomienda seguir</strong> para Fort Morgan Cay.</div><div class="bchips"><span class="bchip on">Isla privada</span><span class="bchip on">Wellness</span><span class="bchip on">Escala íntima</span></div></div>
+    <div class="bcard rv"><div class="bn">Laucala</div><div class="bp">Fiyi</div><div class="be">La isla privada absoluta: 25 residencias y autosuficiencia total. <strong>El techo de la exclusividad.</strong></div><div class="bchips"><span class="bchip on">Isla privada</span><span class="bchip on">Escala íntima</span><span class="bchip">Wellness</span></div></div>
+    <div class="bcard rv d1"><div class="bn">Cayo Espanto</div><div class="bp">Belice</div><div class="be">Siete villas y nada más: <strong>la privacidad como producto único</strong>, a un vuelo corto del sitio.</div><div class="bchips"><span class="bchip on">Isla privada</span><span class="bchip on">Escala íntima</span><span class="bchip">Wellness</span></div></div>
+    <div class="bcard hi rv d2"><div class="bn">KAIRA</div><div class="bp">Fort Morgan Cay · Honduras</div><div class="be">Espíritu balinés, alma hondureña, <strong>leyenda propia del siglo XVII</strong> y cero regalías. Todo el estándar, ninguna renta de marca.</div><div class="bchips"><span class="bchip on">Isla privada</span><span class="bchip on">Wellness</span><span class="bchip on">Marca independiente</span><span class="bchip on">Escala íntima</span></div></div>
+  </div>
+  <p class="res-note rv"><span class="dot dr"></span>Referencias de posicionamiento externas, con fines de dirección de marca. La comparación detallada por seis ejes vive en el documento de modelo y mercadeo del proyecto.</p>
+
+  <div class="posmap rv" aria-label="Mapa conceptual de posicionamiento">
+    <svg viewBox="0 0 640 420">
+      <line x1="70" y1="360" x2="600" y2="360" stroke="rgba(147,173,165,.3)"/>
+      <line x1="70" y1="360" x2="70" y2="70" stroke="rgba(147,173,165,.3)"/>
+      <path d="M600,360 l-12,-5 v10 z" fill="rgba(147,173,165,.6)"/>
+      <path d="M70,70 l-5,12 h10 z" fill="rgba(147,173,165,.6)"/>
+      <text class="pos-ax" x="335" y="396" text-anchor="middle">Resort abierto  →  Isla privada</text>
+      <text class="pos-ax" x="40" y="215" text-anchor="middle" transform="rotate(-90 40 215)">Alojamiento  →  Santuario</text>
+      <circle cx="187" cy="267" r="5" fill="rgba(147,173,165,.7)"/>
+      <text class="pos-nm" x="197" y="272">Kimpton (Roatán)</text>
+      <circle cx="563" cy="250" r="5" fill="rgba(147,173,165,.7)"/>
+      <text class="pos-nm" x="553" y="254" text-anchor="end">Cayo Espanto</text>
+      <circle cx="574" cy="192" r="5" fill="rgba(147,173,165,.7)"/>
+      <text class="pos-nm" x="564" y="180" text-anchor="end">Laucala</text>
+      <circle cx="362" cy="128" r="5" fill="rgba(147,173,165,.7)"/>
+      <text class="pos-nm" x="362" y="150" text-anchor="middle">Nihi Sumba</text>
+      <circle cx="388" cy="99" r="5" fill="rgba(147,173,165,.7)"/>
+      <text class="pos-nm" x="378" y="92" text-anchor="end">Aman</text>
+      <circle cx="494" cy="111" r="5" fill="rgba(147,173,165,.7)"/>
+      <text class="pos-nm" x="502" y="123">COMO Parrot Cay</text>
+      <circle cx="547" cy="87" r="13" fill="none" stroke="rgba(107,199,169,.6)" stroke-dasharray="3 4"/>
+      <circle cx="547" cy="87" r="7" fill="var(--jade-bright)"/>
+      <text class="pos-nm j" x="537" y="72" text-anchor="end">KAIRA</text>
+    </svg>
+    <p class="res-note" style="margin-top:14px"><span class="dot dr"></span>Mapa conceptual de posicionamiento, no cuantitativo: la esquina superior derecha es el territorio objetivo.</p>
+  </div>
+
+  <div class="quote-card rv">
+    <p>El estudio recomienda un esfuerzo de mercadeo dedicado y de largo plazo para establecer Fort Morgan Cay como destino diferenciado, tal como Parrot Cay se comercializa de forma independiente del resto de Turcas y Caicos.</p>
+    <div class="qa"><span class="dot dg"></span>Estudio de mercadeo · borrador del 12/09/25</div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP V · MOTOR FINANCIERO ══ -->
+<section id="c5">
+  <div class="eyebrow rv">Capítulo V · El motor financiero</div>
+  <h2 class="display rv d1">La marea que deja <em>$6,170,000</em> en la orilla</h2>
+  <p class="lede rv d2">El residencial paga todo. Los treinta lotes cubren la compra de la isla, la urbanización y la construcción completa del hotel. Lo que queda en la orilla, exactamente <strong>$6,170,000</strong>, es capital libre antes de que el hotel reciba a su primer huésped.</p>
+
+  <div class="wf-wrap rv d2">
+    <svg class="wf" id="wf" viewBox="0 0 780 430" role="img" aria-label="Cascada financiera del proyecto">
+      <line class="excline" x1="40" y1="287.7" x2="740" y2="287.7"/>
+      <line class="link" x1="148" y1="50" x2="198" y2="50"/>
+      <line class="link" x1="294" y1="170" x2="344" y2="170"/>
+      <line class="link" x1="440" y1="210" x2="490" y2="210"/>
+      <line class="link" x1="586" y1="287.7" x2="636" y2="287.7"/>
+      <rect class="up r1" x="52" y="50" width="96" height="320" rx="5" fill="rgba(147,173,165,.30)" stroke="rgba(147,173,165,.5)"/>
+      <rect class="dn r2" x="198" y="50" width="96" height="120" rx="5" fill="rgba(176,123,79,.34)" stroke="rgba(176,123,79,.65)"/>
+      <rect class="dn r3" x="344" y="170" width="96" height="40" rx="5" fill="rgba(176,123,79,.34)" stroke="rgba(176,123,79,.65)"/>
+      <rect class="dn r4" x="490" y="210" width="96" height="77.7" rx="5" fill="rgba(176,123,79,.34)" stroke="rgba(176,123,79,.65)"/>
+      <rect class="up r5" x="636" y="287.7" width="96" height="82.3" rx="5" fill="rgba(79,165,140,.42)" stroke="rgba(107,199,169,.9)"/>
+      <text class="val" x="100" y="38" text-anchor="middle">$24,000,000</text>
+      <text class="val c" x="246" y="38" text-anchor="middle">-$9,000,000</text>
+      <text class="val c" x="392" y="158" text-anchor="middle">-$3,000,000</text>
+      <text class="val c" x="538" y="198" text-anchor="middle">-$5,830,000</text>
+      <text class="val j" x="684" y="276" text-anchor="middle">$6,170,000</text>
+      <text class="lbl" x="100" y="394" text-anchor="middle">Venta de lotes</text>
+      <text class="lbl" x="100" y="410" text-anchor="middle">30 × $800,000</text>
+      <text class="lbl" x="246" y="394" text-anchor="middle">Compra de</text>
+      <text class="lbl" x="246" y="410" text-anchor="middle">la isla</text>
+      <text class="lbl" x="392" y="394" text-anchor="middle">Urbanización</text>
+      <text class="lbl" x="538" y="394" text-anchor="middle">Capex hotel</text>
+      <text class="lbl" x="538" y="410" text-anchor="middle">llave en mano</text>
+      <text class="lbl" x="684" y="394" text-anchor="middle">Excedente</text>
+      <text class="lbl" x="684" y="410" text-anchor="middle">capital libre</text>
+    </svg>
+  </div>
+
+  <div class="grid g3" style="margin-top:20px">
+    <div class="card rv"><div class="k"><span class="dot da"></span>Inversión total fija</div><div class="v num">$17,830,000</div><div class="s">Isla $9,000,000 + urbanización $3,000,000 + hotel $5,830,000</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot da"></span>Capex por llave</div><div class="v num">$233,200</div><div class="s"><span class="dot dr"></span>El lujo comparable suele construir entre $600,000 y $1,000,000 por llave</div></div>
+    <div class="card hi rv d2"><div class="k"><span class="dot dg"></span>Excedente sobre lo invertido</div><div class="v jade num">34.6%</div><div class="s">$6,170,000 de capital libre sobre $17,830,000 invertidos</div></div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP VI · EL HOTEL ══ -->
+<section id="c6">
+  <div class="eyebrow rv">Capítulo VI · El hotel</div>
+  <h2 class="display rv d1">Veinticinco llaves, tarifa de <em>entrada humilde</em></h2>
+  <p class="lede rv d2">El modelo interno asume tarifas y ocupación deliberadamente conservadoras. El estudio independiente, y el propio mercado, operan muy por encima. Esa distancia no es un riesgo: <strong>es la reserva de valor del proyecto</strong>.</p>
+
+  <div class="grid g4" style="margin-top:48px">
+    <div class="card rv"><div class="k"><span class="dot dg"></span>Bungalows de tierra</div><div class="v num">21 <span style="font-size:.55em;color:var(--foam)">× $600</span></div><div class="s">ADR modelo por noche</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>Overwater signature</div><div class="v num">4 <span style="font-size:.55em;color:var(--foam)">× $800</span></div><div class="s">ADR modelo por noche · punta este de la isla</div></div>
+    <div class="card rv d2"><div class="k"><span class="dot da"></span>ADR combinado</div><div class="v num">$632</div><div class="s">Ocupación estabilizada del modelo: 40%</div></div>
+    <div class="card rv d3"><div class="k"><span class="dot dg"></span>Deuda</div><div class="v num">$6,000,000</div><div class="s">Servicio de $60,000 mensuales, $720,000 anuales</div></div>
+  </div>
+
+  <h3 class="display rv" style="margin-top:74px">El programa que recomienda el estudio</h3>
+  <div class="grid g3" style="margin-top:30px">
+    <div class="card rv"><div class="k"><span class="dot dg"></span>Cocina de autor</div><div class="v" style="font-size:clamp(18px,1.6vw,24px)">Chef con nombre propio</div><div class="s">El estudio recomienda un concepto culinario liderado por un chef emergente y mediático, al estilo de Blue Hill at Stone Barns, como ícono gastronómico de la región</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>Barra de referencia</div><div class="v" style="font-size:clamp(18px,1.6vw,24px)">Mixología de destino</div><div class="s">Un mixólogo de primer nivel que eleve los clásicos locales y convierta el bar en referencia regional, impulsando el ingreso de alimentos y bebidas</div></div>
+    <div class="card rv d2"><div class="k"><span class="dot dg"></span>Comedor abierto al mar</div><div class="v" style="font-size:clamp(18px,1.6vw,24px)">Adentro y afuera</div><div class="s">Espacios que se abren al exterior y maximizan los corredores visuales hacia el Caribe, con techos altos y ventanales de piso a cielo</div></div>
+  </div>
+
+  <h3 class="display rv" style="margin-top:74px">La escalera de tarifas: todo lo que está a la derecha de KAIRA es upside</h3>
+  <div class="ladder">
+    <div class="lrow rv"><div class="lname"><b>KAIRA · modelo interno</b> <span class="dot da" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar j" data-w="38.5"></div></div><div class="lval j num">$632</div></div>
+    <div class="lrow rv d1"><div class="lname">Set competitivo regional 2024 <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="49.8"></div></div><div class="lval num">$816</div></div>
+    <div class="lrow rv d2"><div class="lname">ADR posicionado del estudio <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="50.3"></div></div><div class="lval num">$825</div></div>
+    <div class="lrow rv d3"><div class="lname">Set competitivo · diciembre <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="79.9"></div></div><div class="lval num">$1,310</div></div>
+    <div class="lrow rv d4"><div class="lname">Ultra lujo México 2023 <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="100"></div></div><div class="lval num">$1,640</div></div>
+  </div>
+  <p class="res-note rv"><span class="dot dg"></span>Set competitivo: diez resorts de lujo en Costa Rica, Riviera Maya, Belice y Roatán (Four Seasons, Banyan Tree, EDITION, Viceroy, Kimpton, entre otros), según STR. El estudio proyecta para el sitio una tarifa estabilizada de $1,120 con 62% de ocupación hacia 2034.</p>
+
+  <div class="traj rv" id="traj">
+    <svg viewBox="0 0 620 240" role="img" aria-label="Trayectoria de tarifa proyectada por el estudio frente al modelo KAIRA">
+      <line x1="50" y1="200" x2="570" y2="200" stroke="rgba(147,173,165,.18)"/>
+      <line x1="50" y1="146.7" x2="570" y2="146.7" stroke="rgba(147,173,165,.10)"/>
+      <line x1="50" y1="93.3" x2="570" y2="93.3" stroke="rgba(147,173,165,.10)"/>
+      <line x1="50" y1="40" x2="570" y2="40" stroke="rgba(147,173,165,.10)"/>
+      <text x="44" y="204" text-anchor="end">$600</text>
+      <text x="44" y="150" text-anchor="end">$800</text>
+      <text x="44" y="97" text-anchor="end">$1,000</text>
+      <text x="44" y="44" text-anchor="end">$1,200</text>
+      <text x="50" y="222" text-anchor="middle">2030</text>
+      <text x="180" y="222" text-anchor="middle">2031</text>
+      <text x="310" y="222" text-anchor="middle">2032</text>
+      <text x="440" y="222" text-anchor="middle">2033</text>
+      <text x="570" y="222" text-anchor="middle">2034</text>
+      <path class="w-line" d="M50,114.7 L180,100.5 L310,85.6 L440,70.1 L570,61.3"/>
+      <path class="k-line" d="M50,191.5 L570,191.5"/>
+      <text class="tl" x="566" y="52" text-anchor="end" fill="#D9A441">Estudio: $1,120 · 62% ocupación</text>
+      <text class="tl" x="566" y="184" text-anchor="end" fill="#6BC7A9">KAIRA: $632 · 40% ocupación</text>
+    </svg>
+    <div class="chart-legend"><span><i style="background:var(--ambar)"></i>Proyección del estudio independiente</span><span><i style="background:var(--jade-bright)"></i>Supuesto del modelo interno KAIRA</span></div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+<!-- ══ CAP VII · SALA DE MAREAS ══ -->
+<section class="sim" id="c7">
+  <div class="eyebrow rv">Capítulo VII · Sala de mareas</div>
+  <h2 class="display rv d1">El modelo, <em>vivo</em></h2>
+  <p class="lede rv d2">Mueva cualquier variable y observe cómo respira el proyecto, o cargue un escenario completo con un solo toque. Los cálculos usan los parámetros operativos del estudio: $400 de alimentos y bebidas y $125 de spa por habitación ocupada, con sus márgenes departamentales. Todo sobre el año estabilizado.</p>
+
+  <div class="presets rv d2">
+    <button class="preset" data-p="cons">Escenario conservador</button>
+    <button class="preset active" data-p="base">Modelo base</button>
+    <button class="preset" data-p="est">Ocupación del estudio</button>
+  </div>
+
+  <div class="sim-grid">
+    <div class="rv d2">
+      <div class="ctrl"><label>Precio por lote <output id="o-lote">$800,000</output></label><input type="range" id="i-lote" min="500000" max="1200000" step="25000" value="800000"></div>
+      <div class="ctrl"><label>Lotes vendidos <output id="o-vend">30</output></label><input type="range" id="i-vend" min="0" max="30" step="1" value="30"></div>
+      <div class="ctrl"><label>ADR bungalow de tierra <output id="o-adrt">$600</output></label><input type="range" id="i-adrt" min="400" max="1200" step="25" value="600"></div>
+      <div class="ctrl"><label>ADR overwater <output id="o-adro">$800</output></label><input type="range" id="i-adro" min="500" max="1600" step="25" value="800"></div>
+      <div class="ctrl"><label>Ocupación anual <output id="o-occ">40%</output></label><input type="range" id="i-occ" min="20" max="70" step="1" value="40"></div>
+      <div class="ctrl"><label>Gastos fijos y no distribuidos <span class="dot dr" style="margin-left:6px"></span> <output id="o-fij">32%</output></label><input type="range" id="i-fij" min="24" max="40" step="1" value="32"></div>
+      <button class="reset" id="reset">Volver al modelo base</button><span class="base-chip on" id="chip">Modelo base activo</span>
+    </div>
+
+    <div class="rv d3">
+      <div class="out-grid">
+        <div class="out"><div class="k"><span class="dot da"></span>Ingresos por lotes</div><div class="v num" id="r-lotes">$24,000,000</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Excedente residencial</div><div class="v num pos" id="r-exc">$6,170,000</div><div class="s">Sobre inversión fija de $17,830,000</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Ingreso hotelero anual</div><div class="v num" id="r-rev">$4,223,050</div><div class="s">Habitaciones + alimentos y bebidas + spa</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>NOI hotelero</div><div class="v num" id="r-noi">$759,693</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Ocupación de equilibrio</div><div class="v num" id="r-be">37.9%</div><div class="s">Nivel que cubre exactamente la deuda</div></div>
+        <div class="out"><div class="k"><span class="dot dr"></span>Valor implícito del hotel</div><div class="v num" id="r-val">$9,496,159</div><div class="s">NOI capitalizado al 8%</div></div>
+        <div class="out wide"><div class="k"><span class="dot da"></span>Cobertura del servicio de deuda · $720,000 anuales</div>
+          <div class="gauge-wrap">
+            <svg class="gauge" viewBox="0 0 190 112" aria-hidden="true">
+              <path d="M17,95 A78,78 0 0 1 70.9,20.8" fill="none" stroke="#C96A5A" stroke-width="8" opacity=".8"/>
+              <path d="M70.9,20.8 A78,78 0 0 1 109.6,18.4" fill="none" stroke="#D9A441" stroke-width="8" opacity=".85"/>
+              <path d="M109.6,18.4 A78,78 0 0 1 173,95" fill="none" stroke="#4FA58C" stroke-width="8" opacity=".9"/>
+              <line class="needle" id="needle" x1="95" y1="95" x2="95" y2="27" stroke="#E8DCC3" stroke-width="2.5"/>
+              <circle cx="95" cy="95" r="4.5" fill="#E8DCC3"/>
+              <text x="14" y="110">0</text>
+              <text x="62" y="12">1.0</text>
+              <text x="170" y="110">2.5</text>
+            </svg>
+            <div>
+              <div class="dscr-read num" id="r-dscr" style="color:var(--sand)">1.06×</div>
+              <div class="dscr-note" id="r-note">La operación cubre la deuda con margen estrecho.</div>
+            </div>
+          </div>
+        </div>
+        <div class="out wide"><div class="k"><span class="dot da"></span>Valor total creado sobre la inversión</div><div class="v num pos" id="r-crea">$15,666,159</div><div class="s">Venta de lotes + valor implícito del hotel, menos los $17,830,000 invertidos. El terreno hotelero y la marca quedan además en propiedad.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hm-wrap rv">
+    <h3 class="display">El mapa de profundidades: DSCR bajo cualquier marea</h3>
+    <p class="res-note" style="margin-top:14px"><span class="dot da"></span>Cada celda es la cobertura de deuda para una combinación de ADR combinado y ocupación, con los gastos fijos del control de arriba. Coral por debajo de 1.00, ámbar en zona estrecha, jade con holgura. La celda marcada es la posición actual de los controles.</p>
+    <div class="hm" id="hm"></div>
+  </div>
+
+  <div class="flow rv">
+    <h3 class="display">Anatomía de un año: a dónde va cada dólar</h3>
+    <p class="res-note" style="margin-top:14px"><span class="dot da"></span>Con los valores actuales del simulador. Márgenes departamentales del estudio; gastos fijos según el control superior.</p>
+    <div class="fl-lab">Ingreso total <span id="fl-rev" style="color:var(--jade-bright);font-weight:600"></span></div>
+    <div class="fl-bar" id="fl-top"></div>
+    <div class="fl-lab">Destino del ingreso</div>
+    <div class="fl-bar" id="fl-mid"></div>
+    <div class="fl-lab">Destino del NOI <span id="fl-noi" style="color:var(--jade-bright);font-weight:600"></span></div>
+    <div class="fl-bar" id="fl-bot"></div>
+    <div class="fl-leg" id="fl-leg"></div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP VIII · RESPALDO RESIDENCIAL ══ -->
+<section id="c8">
+  <div class="eyebrow rv">Capítulo VIII · El respaldo residencial</div>
+  <h2 class="display rv d1">$800,000 por lote es un precio <em>de entrada</em>, no de techo</h2>
+  <p class="lede rv d2">Las referencias construidas de la propia isla y de la región ubican al lote KAIRA por encima de los condominios locales y muy por debajo del techo de isla privada con marca. El espacio hacia arriba es enorme.</p>
+
+  <div class="ladder" style="margin-top:48px">
+    <div class="lrow rv"><div class="lname">Kimpton Grand Roatán · condominio <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="11.8"></div></div><div class="lval num">$545,000</div></div>
+    <div class="lrow rv d1"><div class="lname">Watercolors Roatán · condominio <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="13.8"></div></div><div class="lval num">$637,667</div></div>
+    <div class="lrow rv d2"><div class="lname"><b>KAIRA · lote con marca</b> <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar j" data-w="17.3"></div></div><div class="lval j num">$800,000</div></div>
+    <div class="lrow rv d3"><div class="lname">Four Seasons Caye Chapel · lote estate <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="100"></div></div><div class="lval num">$4,625,000</div></div>
+  </div>
+  <p class="res-note rv">Caye Chapel, isla privada en Belice a un vuelo corto del sitio, es la referencia directa de techo: sus lotes estate se ofrecen en promedio a $4,625,000. En Roatán, el Kimpton lista a $618 por pie cuadrado y Watercolors a $448. Precios de lista según el estudio de mercadeo.</p>
+
+  <div class="premium">
+    <div class="pm rv"><div class="t"><span class="dot dg"></span>Comunidad local sin marca</div><div class="n num">$350 a $450</div><div class="t" style="margin-top:10px;margin-bottom:0">por pie cuadrado</div></div>
+    <div class="times rv d1">× 3</div>
+    <div class="pm hi rv d2"><div class="t"><span class="dot dg"></span>Residencia con marca en el Caribe</div><div class="n num">$1,100 a $1,300</div><div class="t" style="margin-top:10px;margin-bottom:0">por pie cuadrado · líderes hasta $1,500 a $1,800</div></div>
+  </div>
+  <p class="res-note rv">Análisis RCLCO de residencias con marca en el Caribe: la marca triplica el valor por pie cuadrado frente a producto local equivalente. Es exactamente el diferencial que KAIRA captura al vender lotes bajo marca propia.</p>
+
+  <div class="grid g3" style="margin-top:52px">
+    <div class="card rv"><div class="k"><span class="dot dg"></span>Absorción proyectada del estudio</div><div class="v num">2.0 <span style="font-size:.5em;color:var(--foam)">unidades / mes</span></div><div class="s">Para el programa residencial del sitio</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>Absorción real · Caye Chapel</div><div class="v num">1.75 <span style="font-size:.5em;color:var(--foam)">unidades / mes</span></div><div class="s">22 de 24 residencias de la fase uno ya vendidas</div></div>
+    <div class="card hi rv d2"><div class="k"><span class="dot da"></span>Venta completa de KAIRA</div><div class="v jade num">≈ 17 meses</div><div class="s">30 lotes al ritmo real observado en la región</div></div>
+  </div>
+
+  <div class="quote-card rv">
+    <p>En el condominio con bandera de la isla, el propietario solo puede usar su unidad 28 noches en temporada alta y 28 en temporada baja, y comparte el 50% del ingreso neto de renta con el hotel. El lote KAIRA es propiedad plena: sin límite de noches, sin reparto obligatorio.</p>
+    <div class="qa"><span class="dot dg"></span>Programa de renta del Kimpton Grand Roatán · estudio de mercadeo</div>
+  </div>
+
+  <h3 class="display rv" style="margin-top:74px">El mercado abierto de Roatán, en una sola métrica verificable: dólares por metro cuadrado</h3>
+  <p class="res-note rv" style="margin-top:16px">Listados activos con nombre, tamaño y corredor, a julio de 2026. Cualquiera puede verificarlos en el MLS de la isla.</p>
+  <div class="ladder" style="margin-top:30px">
+    <div class="lrow rv"><div class="lname">Coral Views Village · lote interior de 566 m² (0.14 acres) · $58,000 <span class="dot dr" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="5.3"></div></div><div class="lval num">$102/m²</div></div>
+    <div class="lrow rv d1"><div class="lname">Paya Bay · frente de playa de 5,261 m² (1.3 acres) · $1,800,000 <span class="dot dr" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="17.6"></div></div><div class="lval num">$342/m²</div></div>
+    <div class="lrow rv d2"><div class="lname">Turtle Crossing · frente de agua de 4,047 m² (1 acre) · $1,549,000 <span class="dot dr" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="19.7"></div></div><div class="lval num">$383/m²</div></div>
+    <div class="lrow rv d3"><div class="lname"><b>KAIRA · lote promedio de 1,175 m² · $800,000</b> <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar j" data-w="35"></div></div><div class="lval j num">$681/m²</div></div>
+    <div class="lrow rv d4"><div class="lname">Four Seasons Caye Chapel · lote estate promedio · $4,625,000 <span class="dot dg" style="margin-left:6px"></span></div><div class="ltrack"><div class="lbar" data-w="100"></div></div><div class="lval num">$1,948/m²</div></div>
+  </div>
+  <p class="res-note rv">Fuentes: MLS de Roatán vía 7th Heaven Properties (Coral Views), RE/MAX Bay Islands (Turtle Crossing y Paya Bay), listados activos a julio de 2026. Caye Chapel y KAIRA según el estudio de mercadeo y el modelo interno. Pristine Bay, la comunidad master planned premium de la isla, lista sitios de construcción desde $230,000 (Big Sky Roatan Realty) y reporta lotes de frente de playa vendidos por encima de $1,000,000.</p>
+  <p class="res-note rv"><strong style="color:var(--sand)">La lectura honesta:</strong> por metro cuadrado, KAIRA pide cerca del doble que el mejor frente de playa abierto de la isla, y un tercio del benchmark regional de isla privada con marca. Ese diferencial intermedio es exactamente lo que la capa de marca, hotel e isla privada debe justificar, y lo que el multiplicador de RCLCO respalda.</p>
+</section>
+
+<div class="hairline"></div>
+<!-- ══ CAP IX · LA DEMANDA ══ -->
+<section id="c9">
+  <div class="eyebrow rv">Capítulo IX · La demanda</div>
+  <h2 class="display rv d1">Un mercado de volumen <em>sin techo de lujo</em></h2>
+  <p class="lede rv d2">Roatán ya mueve millones de visitantes con una oferta que promedia tarifas de motel. La pirámide tiene base y no tiene cúspide: existe <strong>un solo competidor real de lujo</strong> en toda la isla. KAIRA no entra a competir, entra a coronar.</p>
+
+  <div class="stack rv d2">
+    <div class="stack-bar">
+      <div class="sk1" style="width:64.5%">Cruceros · 64.5%</div>
+      <div class="sk2" style="width:30.1%">Pernocta · 30.1%</div>
+      <div class="sk3" style="width:5.4%"></div>
+    </div>
+    <div class="stack-leg"><span><span class="dot dg"></span>Cruceros <b>1,802,495</b> (+29.4% vs 2023)</span><span><span class="dot dg"></span>Pernocta <b>840,775</b></span><span><span class="dot dg"></span>Visita de día <b>149,947</b></span><span>Total 2024 <b>2,793,217</b> (+17.8%)</span></div>
+  </div>
+
+  <div class="grid g3" style="margin-top:44px">
+    <div class="card rv"><div class="k"><span class="dot dg"></span>Origen norteamericano</div><div class="v num">53.2%</div><div class="s">446,976 visitantes de pernocta desde Norteamérica en 2024</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>Estadía promedio</div><div class="v num">9.7 días</div><div class="s">Muy por encima de los mercados caribeños comparables</div></div>
+    <div class="card rv d2"><div class="k"><span class="dot dg"></span>Tarifa promedio de la isla</div><div class="v num">$62</div><div class="s">Promedio de 112 hoteles registrados. La cúspide está vacía</div></div>
+  </div>
+
+  <h3 class="display rv" style="margin-top:70px">El catalizador: un aeropuerto que se duplica</h3>
+  <p class="res-note rv" style="margin-top:18px"><span class="dot dg"></span>El Juan Manuel Gálvez está en plena expansión, una inversión de 810 millones de lempiras dentro del plan nacional de aeropuertos.</p>
+  <div class="grid g3" style="margin-top:26px">
+    <div class="card rv"><div class="k"><span class="dot dg"></span>Terminal</div><div class="v num">908 → 2,122 m²</div><div class="s">La superficie de espera se multiplica por más de dos</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>Asientos de sala</div><div class="v num">412 → 1,268</div><div class="s">Capacidad triplicada para pasajeros en tránsito</div></div>
+    <div class="card rv d2"><div class="k"><span class="dot dg"></span>Mostradores</div><div class="v num">8 → 28</div><div class="s">Espacio para nuevas aerolíneas y frecuencias</div></div>
+  </div>
+
+  <div class="routes rv">
+    <span class="route daily">Miami · diario</span>
+    <span class="route">Dallas</span>
+    <span class="route">Houston</span>
+    <span class="route">Atlanta</span>
+    <span class="route">Denver</span>
+    <span class="route">Minneapolis</span>
+    <span class="route">Toronto</span>
+    <span class="route">Montreal</span>
+    <span class="route">San Salvador</span>
+    <span class="route">Ciudad de Belice</span>
+    <span class="route">Ciudad de Guatemala</span>
+  </div>
+  <p class="res-note rv"><span class="dot dg"></span>Once destinos internacionales directos, operados por American, Delta, United, Sun Country y WestJet. Hoy la única ruta norteamericana diaria es Miami: cada frecuencia nueva que destrabe la expansión es demanda incremental directa.</p>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP X · EL HUÉSPED ══ -->
+<section class="legend-sec" id="c10">
+  <div class="eyebrow rv">Capítulo X · El huésped y el comprador</div>
+  <h2 class="display rv d1">Quién llega, cuánto se queda, <em>cuánto deja</em></h2>
+  <p class="lede rv d2">El dato duro dibuja al visitante de Roatán; el arquetipo dibuja a quién le habla KAIRA. Uno viene de los documentos, el otro es dirección de marca, y la carta los distingue con honestidad.</p>
+
+  <div class="grid g4" style="margin-top:48px">
+    <div class="card rv"><div class="k"><span class="dot dg"></span>Origen</div><div class="v num">53.2%</div><div class="s">De Norteamérica, el mercado emisor de lujo más grande del mundo</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>Permanencia</div><div class="v num">9.7 días</div><div class="s">El visitante de Roatán se queda, no pasa de largo</div></div>
+    <div class="card rv d2"><div class="k"><span class="dot dg"></span>Cercanía</div><div class="v num">2 a 3 h</div><div class="s">De vuelo directo desde el sur y centro de Estados Unidos</div></div>
+    <div class="card hi rv d3"><div class="k"><span class="dot da"></span>Gasto por noche ocupada</div><div class="v jade num">$1,157</div><div class="s">ADR $632 + $400 de alimentos y bebidas + $125 de spa, con parámetros del estudio</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card rv"><div class="k"><span class="dot dr"></span>El huésped · arquetipo de marca</div><div class="v" style="font-size:clamp(19px,1.8vw,26px)">El peregrino del bienestar</div><div class="s">Entre 45 y 65 años, viaja en pareja o en solitario, buceó una vez en el arrecife y volvió distinto. No busca descanso: busca ritual, mar y transformación. Reserva directo, regresa y trae a alguien.</div></div>
+    <div class="card rv d1"><div class="k"><span class="dot dg"></span>El comprador del lote · según RCLCO</div><div class="v" style="font-size:clamp(19px,1.8vw,26px)">Compra marca, no metros</div><div class="s">La residencia con marca paga por confianza, servicios y liquidez de reventa: en el Caribe eso vale hasta tres veces el pie cuadrado del producto local equivalente.</div></div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP XI · EL PLAN DE MERCADEO ══ -->
+<section id="c11">
+  <div class="eyebrow rv">Capítulo XI · El plan de mercadeo</div>
+  <h2 class="display rv d1">Orgánico primero: <em>el huésped es la campaña</em></h2>
+  <p class="lede rv d2">Cinco pilares sin publicidad tradicional. La marca se construye con las voces correctas, la escasez correcta y los dueños correctos.</p>
+
+  <div class="mkt" style="margin-top:44px">
+    <div class="mrow rv"><div class="mnum">01</div><div class="mt">Contenido del huésped</div><div class="mb">El huésped genera el contenido: reels de rituales, amaneceres, el día en la isla. <strong>Se siente orgánico porque lo es.</strong> Cero publicidad tradicional.</div></div>
+    <div class="mrow rv"><div class="mnum">02</div><div class="mt">Curaduría de voces</div><div class="mb">Nada de mega influencers. Creadores de wellness, atletas de surf y buceo, fotógrafos y periodistas de viaje que ya hablan el idioma. <strong>Pocos, bien elegidos.</strong></div></div>
+    <div class="mrow rv"><div class="mnum">03</div><div class="mt">Prensa ganada</div><div class="mb">Listas del mejor hotel, premios, editoriales. <strong>La validación de terceros pesa más</strong> que cualquier anuncio pagado.</div></div>
+    <div class="mrow rv"><div class="mnum">04</div><div class="mt">Escasez y comunidad</div><div class="mb">Lista de espera, acceso por referido, huéspedes que regresan. <strong>El club KAIRA</strong>, como los Amanjunkies o los devotos de Nihi.</div></div>
+    <div class="mrow rv"><div class="mnum">05</div><div class="mt">El dueño como embajador</div><div class="mb">Los dueños residenciales amplifican de forma natural. <strong>Su historia vende las llaves y llena las noches.</strong></div></div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP XII · LA RUTA ══ -->
+<section class="sim" id="c12">
+  <div class="eyebrow rv">Capítulo XII · La ruta</div>
+  <h2 class="display rv d1">Del mes cero a la <em>estabilización</em></h2>
+  <p class="lede rv d2">Cronograma ilustrativo de trabajo, en meses relativos y sin fechas comprometidas. La única ancla dura es la absorción: <strong>a 1.75 unidades por mes, ritmo real observado en la región, los 30 lotes se venden en unos 17 meses</strong>.</p>
+
+  <div class="tl-wrap rv d2">
+    <div class="tl-inner">
+      <div class="tl-scale"><span>Mes 0</span><span>Mes 6</span><span>Mes 12</span><span>Mes 18</span><span>Mes 24</span><span>Mes 30</span></div>
+      <div class="tl-axis"><div class="tl-mark" style="left:80%"></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Permisos y diseño</b>supuesto de trabajo</div><div class="tl-track"><div class="tl-bar tb-r" style="left:0%;width:20%">0 a 6</div></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Urbanización</b>$3,000,000 · supuesto</div><div class="tl-track"><div class="tl-bar tb-r" style="left:13.3%;width:26.7%">4 a 12</div></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Preventa de lotes</b>ancla: 1.75 por mes</div><div class="tl-track"><div class="tl-bar tb-a" style="left:10%;width:56.7%">3 a 20 · 30 lotes</div></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Construcción del hotel</b>$5,830,000 · supuesto</div><div class="tl-track"><div class="tl-bar tb-r" style="left:33.3%;width:46.7%">10 a 24</div></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Apertura y rampa</b>hacia 40% estabilizado</div><div class="tl-track"><div class="tl-bar tb-g" style="left:80%;width:20%">24+</div></div></div>
+    </div>
+  </div>
+  <p class="res-note rv"><span class="dot dr"></span>Barras coral: supuestos de trabajo. <span class="dot da" style="margin-left:10px"></span>Barra ámbar: derivada de la absorción regional real. <span class="dot dg" style="margin-left:10px"></span>Marca jade: apertura, inicio de la operación del modelo.</p>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ══ CAP XIII · FACTIBILIDAD ══ -->
+<section id="c13">
+  <div class="eyebrow rv">Capítulo XIII · Factibilidad en una página</div>
+  <h2 class="display rv d1">Los riesgos, de frente, <em>y cómo se responden</em></h2>
+
+  <div class="feas">
+    <div class="fbox rie rv">
+      <h4>Riesgos</h4>
+      <ul>
+        <li><strong>Conectividad aérea:</strong> hoy solo Miami tiene vuelo diario desde Norteamérica.</li>
+        <li><strong>Estacionalidad:</strong> la temporada baja de septiembre a noviembre coincide con la época de huracanes.</li>
+        <li><strong>Pernocta en maduración:</strong> el volumen actual lo domina el crucerista de un día.</li>
+        <li><strong>Marca nueva:</strong> construir sin la maquinaria de distribución de una bandera internacional.</li>
+      </ul>
+    </div>
+    <div class="fbox mit rv d1">
+      <h4>Mitigantes</h4>
+      <ul>
+        <li><strong>Aeropuerto en expansión:</strong> terminal al doble, asientos de 412 a 1,268, mostradores de 8 a 28.</li>
+        <li><strong>Modelo autofinanciado:</strong> los lotes pagan todo y dejan $6,170,000 antes de abrir.</li>
+        <li><strong>Supuestos bajo mercado:</strong> ADR $632 y 40% de ocupación frente a $816 del set competitivo y 62% del estudio.</li>
+        <li><strong>Deuda cubierta desde 37.9% de ocupación</strong> en el año estabilizado (cálculo derivado).</li>
+        <li><strong>Categoría vacía:</strong> un solo competidor de lujo real y absorción regional probada de 1.75 unidades por mes.</li>
+        <li><strong>Mercadeo UGC:</strong> comunidad, escasez y prensa ganada sustituyen la maquinaria de bandera.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="prog-strip rv">
+    <span><b>30</b> lotes</span>
+    <span><b>25</b> llaves</span>
+    <span>Inversión <b>$17,830,000</b></span>
+    <span>Excedente <i>$6,170,000</i></span>
+    <span>Deuda <b>$6,000,000</b></span>
+  </div>
+</section>
+
+<!-- ══ CAP XIV · LA PRUEBA DE FUEGO ══ -->
+<section class="sim" id="c14">
+  <div class="eyebrow rv">Capítulo XIV · La prueba de fuego</div>
+  <h2 class="display rv d1">Rompa el modelo <em>usted mismo</em></h2>
+  <p class="lede rv d2">La sala de mareas mueve la operación; este tablero golpea el proyecto entero: huracán, ventas lentas y sobrecostos, solos o combinados. La deuda de $6,000,000 es un puente que se retira con el efectivo de los lotes: si las ventas se atrasan más allá de la apertura (mes 24), el tablero muestra cuántos meses queda viva y qué cuesta servirla.</p>
+
+  <div class="presets rv d2">
+    <button class="spreset active" data-p="base">Modelo base</button>
+    <button class="spreset" data-p="hur">Huracán</button>
+    <button class="spreset" data-p="slow">Ventas lentas</button>
+    <button class="spreset storm" data-p="storm">Tormenta perfecta</button>
+  </div>
+
+  <div class="sim-grid">
+    <div class="rv d2">
+      <div class="ctrl"><label>Precio por lote <output id="os-lote">$800,000</output></label><input type="range" id="is-lote" min="500000" max="1200000" step="25000" value="800000"></div>
+      <div class="ctrl"><label>Absorción · lotes por mes <output id="os-pace">1.75</output></label><input type="range" id="is-pace" min="0.5" max="3" step="0.05" value="1.75"></div>
+      <div class="ctrl"><label>Sobrecosto del hotel <output id="os-oh">0%</output></label><input type="range" id="is-oh" min="0" max="40" step="1" value="0"></div>
+      <div class="ctrl"><label>Sobrecosto de urbanización <output id="os-ou">0%</output></label><input type="range" id="is-ou" min="0" max="40" step="1" value="0"></div>
+      <div class="ctrl"><label>Huracán · meses de cierre <output id="os-hur">0</output></label><input type="range" id="is-hur" min="0" max="6" step="1" value="0"></div>
+      <div class="ctrl"><label>Ocupación estabilizada <output id="os-occ">40%</output></label><input type="range" id="is-occ" min="20" max="70" step="1" value="40"></div>
+      <div class="ctrl"><label>Gastos fijos <span class="dot dr" style="margin-left:6px"></span> <output id="os-fij">32%</output></label><input type="range" id="is-fij" min="24" max="40" step="1" value="32"></div>
+      <button class="reset" id="s-reset">Volver al modelo base</button>
+    </div>
+
+    <div class="rv d3">
+      <div class="out-grid">
+        <div class="out"><div class="k"><span class="dot da"></span>Excedente residencial ajustado</div><div class="v num pos" id="rs-exc">$6,170,000</div><div class="s">Con sobrecostos aplicados</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Venta completa de 30 lotes</div><div class="v num" id="rs-mes">Mes 20.1</div><div class="s">Preventa inicia mes 3 · apertura del hotel mes 24</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Estado de la deuda al abrir</div><div class="v pos" id="rs-debt" style="font-size:clamp(15px,1.4vw,20px)">Retirada antes de abrir</div><div class="s" id="rs-debt-s">Puente cerrado con efectivo de lotes</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Ocupación efectiva del año de choque</div><div class="v num" id="rs-oeff">40%</div><div class="s" id="rs-oeff-s">Sin cierre por huracán</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>NOI del año de choque</div><div class="v num" id="rs-noi">$759,693</div><div class="s">Mismo motor de la sala de mareas</div></div>
+        <div class="out"><div class="k"><span class="dot da"></span>Colchón final tras choques</div><div class="v num pos" id="rs-colchon">$6,170,000</div><div class="s" id="rs-colchon-s">Excedente íntegro, sin deuda viva</div></div>
+        <div class="out wide">
+          <div class="verdict v-g" id="s-verdict">
+            <div class="light"></div>
+            <div>
+              <div class="vt" id="vs-t">El modelo respira sin ayuda</div>
+              <div class="vb" id="vs-b">Deuda retirada antes de la apertura, excedente íntegro y operación por encima del punto de equilibrio.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-wrap rv">
+    <div class="tl-inner">
+      <div class="tl-scale"><span>Mes 0</span><span>Mes 8</span><span>Mes 16</span><span>Mes 24</span><span>Mes 32</span><span>Mes 40</span></div>
+      <div class="tl-axis"><div class="tl-mark" style="left:60%"></div><div class="tl-mark debt" id="stl-debt" style="left:50.4%"></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Preventa de lotes</b>hasta venta completa</div><div class="tl-track"><div class="tl-bar tb-a" id="stl-pre" style="left:7.5%;width:42.9%">3 a 20</div></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Construcción del hotel</b>supuesto de trabajo</div><div class="tl-track"><div class="tl-bar tb-r" style="left:25%;width:35%">10 a 24</div></div></div>
+      <div class="tl-row"><div class="tl-name"><b>Operación</b>apertura mes 24</div><div class="tl-track"><div class="tl-bar tb-g" style="left:60%;width:40%">24+</div></div></div>
+    </div>
+    <div class="tl-note" style="margin-top:14px;font-size:11px;color:var(--foam);display:flex;gap:20px;flex-wrap:wrap"><span><span class="dot dg"></span>Marca jade: apertura del hotel</span><span><span class="dot da"></span>Marca ámbar: retiro de la deuda, se mueve con la absorción</span></div>
+  </div>
+</section>
+
+<!-- ══ CIERRE ══ -->
+<section class="cierre" id="cierre">
+  <div class="eyebrow rv" style="justify-content:center">La tesis</div>
+  <p class="big rv d1">Una isla con leyenda propia, un residencial que paga la isla, la obra y el hotel dejando <em>$6,170,000</em> libres, y una marca sin regalías en la única categoría vacía de Roatán. Cada punto por encima del modelo es <em>margen puro</em>.</p>
+  <div class="leyenda rv d2">
+    <span><span class="dot dg"></span>Dato del modelo o de los documentos del proyecto</span>
+    <span><span class="dot da"></span>Derivado por cálculo</span>
+    <span><span class="dot dr"></span>Benchmark o supuesto externo</span>
+  </div>
+</section>
+
+<footer>
+  <svg class="f-logo" viewBox="0 0 64 64"><use href="#kaira-mark"/></svg>
+  <span>KAIRA · Fort Morgan Cay · Documento interno de trabajo</span>
+  <span>Preparado por Rodrigo Samour · HAUS</span>
+  <span>F pantalla completa · ← → capítulos · Julio 2026</span>
+</footer>
+
+</main>
+<script>
+(function(){
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* progress */
+  var prog = $('prog');
+  addEventListener('scroll', function(){
+    var h = document.documentElement;
+    prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  }, {passive:true});
+
+  /* starfield */
+  (function(){
+    if(rm) return;
+    var cv = $('stars'); if(!cv) return;
+    var ctx = cv.getContext('2d'), P = [], W, H;
+    function size(){ W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight; }
+    size(); addEventListener('resize', size);
+    for(var i=0;i<90;i++) P.push({x:Math.random(), y:Math.random(), r:Math.random()*1.6+.4, s:Math.random()*.00012+.00004, p:Math.random()*6.28});
+    (function tick(t){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<P.length;i++){
+        var p = P[i];
+        p.y -= p.s*H/60; if(p.y<0){ p.y=1; p.x=Math.random(); }
+        var a = .25 + .45*Math.abs(Math.sin(t*.001 + p.p));
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(107,199,169,' + a + ')';
+        ctx.arc(p.x*W, p.y*H, p.r, 0, 6.28);
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    })(0);
+  })();
+
+  /* reveals */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:.16});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  var ioX = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.lbar').forEach(function(b){ b.style.width = b.dataset.w + '%'; });
+      ioX.unobserve(e.target);
+    });
+  }, {threshold:.3});
+  ['wf','traj'].forEach(function(id){ var n = $(id); if(n) ioX.observe(n); });
+  document.querySelectorAll('.ladder').forEach(function(n){ ioX.observe(n); });
+
+  /* rail */
+  var ids = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14'];
+  var secs = ids.map(function(id){ return $(id); });
+  var dots = document.querySelectorAll('#railnav a');
+  var ioR = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        var i = secs.indexOf(e.target);
+        dots.forEach(function(d,j){ d.classList.toggle('on', j===i); });
+      }
+    });
+  }, {rootMargin:'-45% 0px -45% 0px'});
+  secs.forEach(function(s){ if(s) ioR.observe(s); });
+
+  /* carta: lotes + bungalows */
+  function plotsAlong(pathId, n, container){
+    var path = $(pathId); if(!path || !path.getTotalLength) return;
+    var L = path.getTotalLength();
+    for(var i=0;i<n;i++){
+      var t = 0.03*L + (0.94*L)*(n===1?0:i/(n-1));
+      var p = path.getPointAtLength(t);
+      var p2 = path.getPointAtLength(Math.min(t+2, L));
+      var ang = Math.atan2(p2.y-p.y, p2.x-p.x)*180/Math.PI;
+      var r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r.setAttribute('x', p.x-3.5); r.setAttribute('y', p.y-3.5);
+      r.setAttribute('width', 7); r.setAttribute('height', 7);
+      r.setAttribute('transform', 'rotate(' + ang + ' ' + p.x + ' ' + p.y + ')');
+      r.setAttribute('fill','rgba(232,220,195,.28)');
+      r.setAttribute('stroke','rgba(232,220,195,.75)');
+      r.setAttribute('stroke-width','.8');
+      container.appendChild(r);
+    }
+  }
+  var plots = $('plots');
+  if(plots){ plotsAlong('lotN', 16, plots); plotsAlong('lotS', 14, plots); }
+  var bungs = $('bungs');
+  if(bungs){
+    var rows = [[284,716],[298,722],[312,716]];
+    rows.forEach(function(row){
+      for(var j=0;j<7;j++){
+        var c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx', row[1] + j*12);
+        c.setAttribute('cy', row[0]);
+        c.setAttribute('r', 2.8);
+        c.setAttribute('fill','rgba(107,199,169,.85)');
+        bungs.appendChild(c);
+      }
+    });
+  }
+
+  var ZD = {
+    isla:{t:'Fort Morgan Cay', m:'20 acres · isla privada', b:'Dos secciones: <strong>11.37 acres desarrollables</strong> de terreno plano que no requiere nivelaciones sustanciales, y <strong>8.54 acres de manglar protegido</strong>. Cuatro territorios definidos en el taller: santuario, aldea, residencias y hotel.'},
+    santuario:{t:'El santuario', m:'Manglar · 8.54 acres', b:'La mitad silvestre de la isla, al oeste. Zona protegida e intocable: el desarrollo solo puede ocurrir <strong>sobre el agua en su perímetro</strong>. Senderos de exploración entre el manglar, el corazón de la promesa de la marca.'},
+    aldea:{t:'La aldea', m:'Llegada · corazón social', b:'El punto de arribo en lancha desde Roatán y el centro de vida de la isla. Desde aquí el aeropuerto Juan Manuel Gálvez conecta con <strong>11 destinos internacionales directos</strong> y está en plena expansión.'},
+    lotes:{t:'Las residencias', m:'30 lotes · $24,000,000', b:'La franja residencial del este, entre la playa sur y la costa norte. Treinta lotes con marca a <strong>$800,000</strong> cada uno: su venta financia todo el proyecto y deja el excedente de <strong>$6,170,000</strong>.'},
+    hotel:{t:'El hotel KAIRA', m:'21 bungalows · ADR $600', b:'La punta oriental de la isla. Bungalows con piscina privada entre la vegetación, la base del santuario de bienestar. <strong>ADR modelo de $600</strong> por noche.'},
+    over:{t:'Overwater signature', m:'4 llaves · este · ADR $800', b:'El producto insignia, extendiéndose hacia el este sobre el agua: cuatro llaves con <strong>ADR modelo de $800</strong> por noche y la imagen que define a la marca.'},
+    marina:{t:'La marina', m:'Abrigo sureste', b:'Rompeolas y fondeo protegido en el extremo sureste, la puerta náutica del hotel y de los dueños: <strong>llegar por mar es parte del ritual</strong>.'},
+    fuerte:{t:'El fuerte de Henry Morgan', m:'Siglo XVII · leyenda real', b:'Bastión pirata construido para resguardar la flota de Morgan. Tras <strong>trescientos años de abandono</strong>, las ruinas siguen presentes (ubicación ilustrativa en la carta): la capa de historia que ninguna marca puede comprar.'},
+    arrecife:{t:'Arrecife Mesoamericano', m:'Frente a la puerta', b:'El <strong>segundo sistema de arrecifes más grande del planeta</strong>: el templo natural alrededor del cual gira toda la experiencia KAIRA.'}
+  };
+  var infT = $('inf-t'), infM = $('inf-m'), infB = $('inf-b');
+  function setZone(id){
+    var d = ZD[id]; if(!d) return;
+    infT.textContent = d.t;
+    infM.innerHTML = '<span class="dot dg"></span>' + d.m;
+    infB.innerHTML = d.b;
+    document.querySelectorAll('.zone').forEach(function(z){ z.classList.toggle('active', z.dataset.z === id); });
+    document.querySelectorAll('.zbtn').forEach(function(b){ b.classList.toggle('active', b.dataset.z === id); });
+  }
+  document.querySelectorAll('.zone').forEach(function(z){
+    z.addEventListener('click', function(){ setZone(z.dataset.z); });
+    z.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); setZone(z.dataset.z); } });
+  });
+  document.querySelectorAll('.zbtn').forEach(function(b){
+    b.addEventListener('click', function(){ setZone(b.dataset.z); });
+  });
+
+  /* sala de mareas */
+  var FIXED=17830000, NIGHTS=9125, FB=400, SPA=125, MR=.75, FBM=.175, SPAM=.275, DEBT=720000, CAP=.08;
+  var DEF = {lote:800000, vend:30, adrt:600, adro:800, occ:40, fij:32};
+  var PR = {
+    cons:{lote:750000, vend:27, adrt:550, adro:750, occ:30, fij:34},
+    base:DEF,
+    est:{lote:800000, vend:30, adrt:600, adro:800, occ:62, fij:32}
+  };
+  var inp = {lote:$('i-lote'), vend:$('i-vend'), adrt:$('i-adrt'), adro:$('i-adro'), occ:$('i-occ'), fij:$('i-fij')};
+  var out = {lote:$('o-lote'), vend:$('o-vend'), adrt:$('o-adrt'), adro:$('o-adro'), occ:$('o-occ'), fij:$('o-fij')};
+
+  function money(n){ return (n<0?'-$':'$') + Math.round(Math.abs(n)).toLocaleString('en-US'); }
+  function fill(el){ el.style.setProperty('--fill', ((el.value-el.min)/(el.max-el.min)*100) + '%'); }
+  function matches(preset){ return Object.keys(preset).every(function(k){ return +inp[k].value === preset[k]; }); }
+  function dscrAt(adrB, occ, fij){
+    var noches = NIGHTS*occ;
+    var rev = noches*(adrB + FB + SPA);
+    var dep = noches*(MR*adrB + FBM*FB + SPAM*SPA);
+    return (dep - fij*rev)/DEBT;
+  }
+
+  var HM_ADR = [500,550,600,632,700,750,800,850,900];
+  var HM_OCC = [65,60,55,50,45,40,35,30,25];
+  function buildHeatmap(fij, curAdrB, curOcc){
+    var hm = $('hm'); if(!hm) return;
+    var html = '<div class="hx" style="justify-content:flex-end;padding-right:8px">Ocup.</div>';
+    HM_ADR.forEach(function(a){ html += '<div class="hx num">$' + a + '</div>'; });
+    var nearA = HM_ADR.reduce(function(p,c){ return Math.abs(c-curAdrB)<Math.abs(p-curAdrB)?c:p; });
+    var nearO = HM_OCC.reduce(function(p,c){ return Math.abs(c-curOcc)<Math.abs(p-curOcc)?c:p; });
+    HM_OCC.forEach(function(o){
+      html += '<div class="hy num">' + o + '%</div>';
+      HM_ADR.forEach(function(a){
+        var d = dscrAt(a, o/100, fij);
+        var cls = d<1?'c1':(d<1.2?'c2':(d<1.6?'c3':'c4'));
+        var here = (a===nearA && o===nearO) ? ' here' : '';
+        html += '<div class="hm-cell num ' + cls + here + '" title="ADR $' + a + ' · ' + o + '% · DSCR ' + d.toFixed(2) + '">' + d.toFixed(2) + '</div>';
+      });
+    });
+    hm.innerHTML = html;
+  }
+
+  function seg(cls, w, label){
+    return '<div class="' + cls + '" style="width:' + w + '%" title="' + label + '">' + (w>=12?label:'') + '</div>';
+  }
+  function buildFlow(rev, dep, fij, noi){
+    var top = $('fl-top'); if(!top) return;
+    var adrB = (21*(+inp.adrt.value) + 4*(+inp.adro.value))/25;
+    var n = NIGHTS*(+inp.occ.value/100);
+    var rRooms = n*adrB, rFB = n*FB, rSpa = n*SPA;
+    var pR = rev>0?rRooms/rev*100:0, pF = rev>0?rFB/rev*100:0, pS = rev>0?rSpa/rev*100:0;
+    top.innerHTML = seg('fs1', pR.toFixed(1), 'Habitaciones ' + Math.round(pR) + '%') + seg('fs2', pF.toFixed(1), 'A y B ' + Math.round(pF) + '%') + seg('fs3', pS.toFixed(1), 'Spa ' + Math.round(pS) + '%');
+    $('fl-rev').textContent = money(rev);
+    var cDep = rev - dep, cFij = fij*rev, pN = rev>0?Math.max(noi,0)/rev*100:0;
+    var pCD = rev>0?cDep/rev*100:0, pCF = rev>0?cFij/rev*100:0;
+    $('fl-mid').innerHTML = seg('fc1', pCD.toFixed(1), 'Costos dept. ' + Math.round(pCD) + '%') + seg('fc2', pCF.toFixed(1), 'Fijos ' + Math.round(pCF) + '%') + seg('fc3', pN.toFixed(1), 'NOI ' + Math.round(pN) + '%');
+    var bot = $('fl-bot'), leg = $('fl-leg');
+    if(noi <= 0){
+      bot.innerHTML = seg('fd1', 100, 'NOI insuficiente');
+      leg.innerHTML = '<span>NOI <b>' + money(noi) + '</b></span><span>Servicio de deuda <b>' + money(DEBT) + '</b></span><span>Faltante <b>' + money(DEBT - Math.max(noi,0)) + '</b></span>';
+      $('fl-noi').textContent = money(noi);
+      return;
+    }
+    var pD = Math.min(DEBT/noi,1)*100, pL = Math.max(0, 100-pD);
+    bot.innerHTML = seg('fd1', pD.toFixed(1), 'Deuda ' + Math.round(pD) + '%') + (pL>0 ? seg('fd2', pL.toFixed(1), 'Flujo libre ' + Math.round(pL) + '%') : '');
+    $('fl-noi').textContent = money(noi);
+    var libre = noi - DEBT;
+    leg.innerHTML = '<span>NOI <b>' + money(noi) + '</b></span><span>Servicio de deuda <b>' + money(Math.min(DEBT,noi)) + '</b></span><span>' + (libre>=0?'Flujo libre <b>'+money(libre)+'</b>':'Faltante <b>'+money(-libre)+'</b>') + '</span>';
+  }
+
+  function compute(){
+    var lote=+inp.lote.value, vend=+inp.vend.value, adrt=+inp.adrt.value, adro=+inp.adro.value;
+    var occ=+inp.occ.value/100, fij=+inp.fij.value/100;
+
+    out.lote.textContent = money(lote);
+    out.vend.textContent = vend;
+    out.adrt.textContent = money(adrt);
+    out.adro.textContent = money(adro);
+    out.occ.textContent = inp.occ.value + '%';
+    out.fij.textContent = inp.fij.value + '%';
+    Object.keys(inp).forEach(function(k){ fill(inp[k]); });
+
+    var ingLotes = lote*vend;
+    var exc = ingLotes - FIXED;
+    var adrB = (21*adrt + 4*adro)/25;
+    var noches = NIGHTS*occ;
+    var rev = noches*(adrB + FB + SPA);
+    var dep = noches*(MR*adrB + FBM*FB + SPAM*SPA);
+    var noi = dep - fij*rev;
+    var dscr = noi/DEBT;
+    var margen = MR*adrB + FBM*FB + SPAM*SPA - fij*(adrB + FB + SPA);
+    var be = margen>0 ? DEBT/(NIGHTS*margen) : null;
+    var valH = noi>0 ? noi/CAP : 0;
+    var crea = ingLotes + valH - FIXED;
+
+    $('r-lotes').textContent = money(ingLotes);
+    var eE=$('r-exc'); eE.textContent = money(exc); eE.className = 'v num ' + (exc>=0?'pos':'neg');
+    $('r-rev').textContent = money(rev);
+    var eN=$('r-noi'); eN.textContent = money(noi); eN.className = 'v num ' + (noi>=0?'':'neg');
+    $('r-be').textContent = (be && be<=1) ? (be*100).toFixed(1) + '%' : 'No alcanzable';
+    $('r-val').textContent = money(valH);
+    var eC=$('r-crea'); eC.textContent = money(crea); eC.className = 'v num ' + (crea>=0?'pos':'neg');
+
+    var d = $('r-dscr'), note = $('r-note');
+    d.textContent = dscr.toFixed(2) + '\u00D7';
+    if(dscr < 1){ d.style.color='var(--coral)'; note.textContent='Por debajo de 1.00 la operación no cubre por sí sola el servicio de deuda.'; }
+    else if(dscr < 1.2){ d.style.color='var(--sand)'; note.textContent='La operación cubre la deuda con margen estrecho.'; }
+    else { d.style.color='var(--jade-bright)'; note.textContent='Cobertura holgada: cada punto adicional de ocupación es margen puro.'; }
+    var f = Math.max(0, Math.min(dscr, 2.5))/2.5;
+    $('needle').style.transform = 'rotate(' + ((f-.5)*180) + 'deg)';
+
+    $('chip').classList.toggle('on', matches(DEF));
+    document.querySelectorAll('.preset').forEach(function(b){
+      b.classList.toggle('active', matches(PR[b.dataset.p]));
+    });
+
+    buildHeatmap(fij, adrB, +inp.occ.value);
+    buildFlow(rev, dep, fij, noi);
+  }
+
+  Object.keys(inp).forEach(function(k){ inp[k].addEventListener('input', compute); });
+  $('reset').addEventListener('click', function(){
+    Object.keys(DEF).forEach(function(k){ inp[k].value = DEF[k]; });
+    compute();
+  });
+  document.querySelectorAll('.preset').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p = PR[b.dataset.p];
+      Object.keys(p).forEach(function(k){ inp[k].value = p[k]; });
+      compute();
+    });
+  });
+  compute();
+
+  /* teclado */
+  var NAV = ['portada','c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14','cierre'];
+  function currentIdx(){
+    var mid = innerHeight*.5, best = 0, bd = Infinity;
+    NAV.forEach(function(id,i){
+      var el = $(id); if(!el) return;
+      var r = el.getBoundingClientRect();
+      var d = Math.abs(r.top + Math.min(r.height, innerHeight)*.5 - mid);
+      if(r.top < innerHeight && r.bottom > 0 && d < bd){ bd = d; best = i; }
+    });
+    return best;
+  }
+  addEventListener('keydown', function(e){
+    var tag = document.activeElement && document.activeElement.tagName;
+    if(tag === 'INPUT' || tag === 'BUTTON') return;
+    if(e.key==='ArrowRight' || e.key==='PageDown'){
+      e.preventDefault();
+      var el = $(NAV[Math.min(currentIdx()+1, NAV.length-1)]);
+      if(el) el.scrollIntoView({behavior: rm?'auto':'smooth'});
+    } else if(e.key==='ArrowLeft' || e.key==='PageUp'){
+      e.preventDefault();
+      var el2 = $(NAV[Math.max(currentIdx()-1, 0)]);
+      if(el2) el2.scrollIntoView({behavior: rm?'auto':'smooth'});
+    } else if((e.key==='f'||e.key==='F') && !e.metaKey && !e.ctrlKey){
+      if(document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen().catch(function(){});
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var ISLA=9000000, URB=3000000, HOTEL=5830000, NIGHTS=9125, FB=400, SPA=125, MR=.75, FBM=.175, SPAM=.275, SERV=720000, ADRB=632;
+  var OPEN=24, PRESTART=3, SCALE=40;
+  var DEF = {lote:800000, pace:1.75, oh:0, ou:0, hur:0, occ:40, fij:32};
+  var PR = {
+    base: DEF,
+    hur:  {lote:800000, pace:1.75, oh:0,  ou:0,  hur:3, occ:40, fij:32},
+    slow: {lote:800000, pace:0.85, oh:0,  ou:0,  hur:0, occ:40, fij:32},
+    storm:{lote:800000, pace:0.85, oh:20, ou:20, hur:3, occ:40, fij:32}
+  };
+  var inp = {lote:$('is-lote'), pace:$('is-pace'), oh:$('is-oh'), ou:$('is-ou'), hur:$('is-hur'), occ:$('is-occ'), fij:$('is-fij')};
+  var out = {lote:$('os-lote'), pace:$('os-pace'), oh:$('os-oh'), ou:$('os-ou'), hur:$('os-hur'), occ:$('os-occ'), fij:$('os-fij')};
+  if(!inp.lote) return;
+
+  function money(n){ return (n<0?'-$':'$') + Math.round(Math.abs(n)).toLocaleString('en-US'); }
+  function fill(el){ el.style.setProperty('--fill', ((el.value-el.min)/(el.max-el.min)*100) + '%'); }
+  function matches(p){ return Object.keys(p).every(function(k){ return Math.abs(+inp[k].value - p[k]) < 1e-9; }); }
+  function noiAt(occ, fij){
+    var noches = NIGHTS*occ;
+    var rev = noches*(ADRB + FB + SPA);
+    var dep = noches*(MR*ADRB + FBM*FB + SPAM*SPA);
+    return dep - fij*rev;
+  }
+
+  function compute(){
+    var lote=+inp.lote.value, pace=+inp.pace.value, oh=+inp.oh.value/100, ou=+inp.ou.value/100;
+    var hur=+inp.hur.value, occ=+inp.occ.value/100, fij=+inp.fij.value/100;
+
+    out.lote.textContent = money(lote);
+    out.pace.textContent = pace.toFixed(2);
+    out.oh.textContent = inp.oh.value + '%';
+    out.ou.textContent = inp.ou.value + '%';
+    out.hur.textContent = hur + (hur===1?' mes':' meses');
+    out.occ.textContent = inp.occ.value + '%';
+    out.fij.textContent = inp.fij.value + '%';
+    Object.keys(inp).forEach(function(k){ fill(inp[k]); });
+
+    var exc = lote*30 - ISLA - URB*(1+ou) - HOTEL*(1+oh);
+    var mesVenta = PRESTART + 30/pace;
+    var overlap = Math.max(0, mesVenta - OPEN);
+    var debtAlive = overlap > 0.05;
+    var costDebt = debtAlive ? Math.ceil(overlap)*60000 : 0;
+    var occEff = occ*(12-hur)/12;
+    var noi = noiAt(occEff, fij);
+    var dscr = noi/SERV;
+    var colchon = exc - costDebt;
+
+    $('rs-exc').textContent = money(exc);
+    $('rs-exc').className = 'v num ' + (exc>4000000?'pos':(exc>0?'warn':'neg'));
+    $('rs-mes').textContent = 'Mes ' + (Math.round(mesVenta*10)/10);
+    var rd=$('rs-debt'), rds=$('rs-debt-s');
+    if(debtAlive){
+      rd.textContent = 'Viva ≈ ' + Math.ceil(overlap) + ' meses tras abrir';
+      rd.className = 'v neg';
+      rds.textContent = 'Costo de servirla en ese tramo: ' + money(costDebt) + ' · DSCR operativo ' + dscr.toFixed(2) + '\u00D7';
+    } else {
+      rd.textContent = 'Retirada antes de abrir';
+      rd.className = 'v pos';
+      rds.textContent = 'Puente cerrado con efectivo de lotes en el mes ' + (Math.round(mesVenta*10)/10);
+    }
+    $('rs-oeff').textContent = (Math.round(occEff*1000)/10) + '%';
+    $('rs-oeff-s').textContent = hur>0 ? ('Cierre de ' + hur + (hur===1?' mes':' meses') + ' sobre ' + inp.occ.value + '% estabilizado') : 'Sin cierre por huracán';
+    var rn=$('rs-noi'); rn.textContent = money(noi); rn.className = 'v num ' + (noi>=0?'':'neg');
+    var rc=$('rs-colchon'); rc.textContent = money(colchon);
+    rc.className = 'v num ' + (colchon>4000000?'pos':(colchon>1000000?'warn':'neg'));
+    $('rs-colchon-s').textContent = debtAlive ? 'Excedente menos ' + money(costDebt) + ' de deuda viva' : 'Excedente íntegro, sin deuda viva';
+
+    var v=$('s-verdict'), vt=$('vs-t'), vb=$('vs-b');
+    if(colchon <= 1000000){
+      v.className = 'verdict v-r';
+      vt.textContent = 'Zona de riesgo: el colchón casi desaparece';
+      vb.innerHTML = 'Con estos choques el proyecto conserva <strong>' + money(colchon) + '</strong>. Sigue sin necesitar capital externo, pero pierde la reserva para imprevistos: habría que renegociar precio, ritmo o alcance antes de comprometer distribuciones.';
+    } else if(colchon <= 4000000 || debtAlive || hur>0){
+      v.className = 'verdict v-a';
+      var razones = [];
+      if(debtAlive) razones.push('la deuda sigue viva ' + Math.ceil(overlap) + ' meses tras la apertura' + (dscr<1 ? ' y la operación no la cubre sola (DSCR ' + dscr.toFixed(2) + '\u00D7)' : ''));
+      if(hur>0) razones.push('el año de choque opera a ' + Math.round(occEff*100) + '% efectivo');
+      if(colchon<=4000000 && !debtAlive && hur===0) razones.push('el sobrecosto consume parte del colchón');
+      vt.textContent = 'El modelo aguanta, con cicatrices';
+      vb.innerHTML = 'Colchón final de <strong>' + money(colchon) + '</strong>' + (razones.length ? ': ' + razones.join('; ') : '') + '. El excedente residencial absorbe el golpe sin capital externo.';
+    } else {
+      v.className = 'verdict v-g';
+      vt.textContent = 'El modelo respira sin ayuda';
+      vb.innerHTML = 'Deuda retirada antes de la apertura, colchón de <strong>' + money(colchon) + '</strong> y operación del año de choque en <strong>' + money(noi) + '</strong> de NOI. Cada punto de mejora sobre estos supuestos es margen puro.';
+    }
+
+    var pctPre = Math.min(mesVenta, SCALE);
+    $('stl-pre').style.left = (PRESTART/SCALE*100) + '%';
+    $('stl-pre').style.width = ((pctPre-PRESTART)/SCALE*100) + '%';
+    $('stl-pre').textContent = '3 a ' + Math.round(mesVenta);
+    $('stl-debt').style.left = (Math.min(mesVenta, SCALE)/SCALE*100) + '%';
+  }
+
+  Object.keys(inp).forEach(function(k){ inp[k].addEventListener('input', function(){
+    document.querySelectorAll('.spreset').forEach(function(b){ b.classList.toggle('active', matches(PR[b.dataset.p])); });
+    compute();
+  }); });
+  $('s-reset').addEventListener('click', function(){
+    Object.keys(DEF).forEach(function(k){ inp[k].value = DEF[k]; });
+    document.querySelectorAll('.spreset').forEach(function(b){ b.classList.toggle('active', b.dataset.p==='base'); });
+    compute();
+  });
+  document.querySelectorAll('.spreset').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p = PR[b.dataset.p];
+      Object.keys(p).forEach(function(k){ inp[k].value = p[k]; });
+      document.querySelectorAll('.spreset').forEach(function(x){ x.classList.toggle('active', x===b); });
+      compute();
+    });
+  });
+  compute();
+})();
+</script>
+</body>
+</html>
